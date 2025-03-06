@@ -18,12 +18,28 @@ login_manager.init_app(app)
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+@app.after_request
+def after_request(response):
+    response.headers["Access-Control-Allow-Origin"] = "http://127.0.0.1:5001"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+    return response
+
 @app.route('/register', methods=['POST'])
 def register():
-    data = request.json
+    if not request.is_json:
+        return jsonify({'error': 'Request muss JSON sein'}), 415
+
+    data = request.get_json()
+    if not data:
+        return jsonify({'error': 'Leerer Request'}), 400
+
     username = data.get('username')
     email = data.get('email')
     password = data.get('password')
+
+    if not username or not email or not password:
+        return jsonify({'error': 'Alle Felder sind erforderlich'}), 400
 
     if User.query.filter_by(username=username).first():
         return jsonify({'error': 'Benutzername existiert bereits'}), 400
@@ -32,6 +48,7 @@ def register():
     new_user.set_password(password)
     db.session.add(new_user)
     db.session.commit()
+
     return jsonify({'message': 'Benutzer erfolgreich registriert'}), 201
 
 @app.route('/login', methods=['POST'])
