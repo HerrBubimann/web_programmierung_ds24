@@ -21,24 +21,21 @@
     </div>
 
     <script>
-        // Add event listener for form submission
         document.getElementById("register-form").addEventListener("submit", async function(event) {
             event.preventDefault(); // Prevent the default form submission
 
-            // Get form values
             const username = document.getElementById("username").value;
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
             const confirmPassword = document.getElementById("confirm-password").value;
 
-            // Check if passwords match
             if (password !== confirmPassword) {
                 alert("Passwords do not match.");
                 return;
             }
 
             try {
-                const response = await fetch('http://127.0.0.1:5000/register', {
+                const response = await fetch('http://127.0.0.0:5000/register', {
                     method: 'POST',
                     mode: "no-cors",
                     headers: {
@@ -47,11 +44,10 @@
                     body: JSON.stringify({ username, email, password }),
                 });
 
-                // Check if the response is OK (status code 2xx)
                 if (response.ok) {
                     const data = await response.json();
                     alert("Registration successful: " + data.message);
-                    window.location.href = '/login'; // Redirect to login page
+                    window.location.href = '/login';
                 } else {
                     // Handle non-OK responses
                     const errorData = await response.json();
