@@ -1,0 +1,111 @@
+/* Allgemeine Body-Stile */
+body {
+    background-color: #F3EBF6;
+    font-family: 'Ubuntu', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Hauptbereich */
+h1, h2 {
+    text-align: center;
+    color: #8C55AA;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 0;
+}
+
+li {
+    background-color: #fff;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Formulare */
+form {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+    display: block;
+    margin: 10px 0 5px;
+}
+
+form input, form select, form button {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+form input[type="text"], form input[type="number"], form input[type="date"], form select {
+    background-color: #f9f9f9;
+}
+
+form button {
+    cursor: pointer;
+    background-color: #9C27B0;
+    color: white;
+    border: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #E040FB;
+}
+
+/* Fokuszustand für Formularelemente */
+input:focus, select:focus, button:focus {
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    outline: none;
+}
+
+/* Stil für Links */
+a {
+    color: #8C55AA;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Media Queries für kleinere Bildschirmgrößen */
+@media (max-width: 600px) {
+    form {
+        width: 90%;
+        padding: 15px;
+    }
+
+    ul {
+        padding-left: 20px;
+    }
+
+    li {
+        font-size: 14px;
+    }
+
+    h1, h2 {
+        font-size: 20px;
+    }
+}
