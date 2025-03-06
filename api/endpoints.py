@@ -18,6 +18,7 @@ def load_user(user_id):
 def register():
     data = request.json
     username = data.get('username')
+    email = data.get('email')
     password = data.get('password')
 
     if User.query.filter_by(username=username).first():
