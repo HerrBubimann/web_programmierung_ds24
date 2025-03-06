@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 db.init_app(app)
 
-CORS(app)
+CORS(app, origins="http://127.0.0.1:5001", supports_credentials=True)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -21,6 +21,7 @@ def load_user(user_id):
 @app.after_request
 def after_request(response):
     response.headers["Access-Control-Allow-Origin"] = "http://127.0.0.1:5001"
+    response.headers["Access-Control-Allow-Credentials"] = "true"
     response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
     response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
     return response
@@ -46,6 +47,8 @@ def register():
 
     new_user = User(username=username)
     new_user.set_password(password)
+    new_user.usermail = email
+    new_user.hash_password(password)
     db.session.add(new_user)
     db.session.commit()
 

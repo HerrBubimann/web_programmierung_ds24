@@ -1,10 +1,13 @@
-from flask import Flask, render_template, redirect, url_for, request, flash
+from flask import Flask, render_template, redirect, url_for, request, flash, jsonify
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from bff.controllers import get_user_topics, get_user_learning_goals, add_topic_for_user, add_learning_goal_for_user
 from api.models import db, User
+from config import Config
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-app.secret_key = 'eine_sehr_geheime_key'
+app.config.from_object(Config)
+db.init_app(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -50,13 +53,19 @@ def add_goal():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        user = User.query.filter_by(username=username).first()
+        data = request.get_json()
+        username_or_email = data.get('username') or data.get('email')
+        password = data.get('password')
+
+        user = User.query.filter(
+            (User.username == username_or_email) | (User.usermail == username_or_email) & (User.is_active == True)
+        ).first()
+
         if user and user.check_password(password):
             login_user(user)
-            return redirect(url_for('index'))
-        flash('Ungültige Anmeldedaten')
+            return jsonify({"message": "Login successful", "redirect": url_for('index')}), 200
+        else:
+            return jsonify({"message": "Ungültige Anmeldedaten"}), 401
     return render_template('login.html')
 
 @app.route('/logout')
@@ -68,17 +77,35 @@ def logout():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        if User.query.filter_by(username=username).first():
-            flash('Benutzername existiert bereits')
-        else:
-            new_user = User(username=username)
+        try:
+            data = request.get_json()
+            if not data:
+                return jsonify({"message": "No data provided"}), 400
+
+            username = data.get('username')
+            password = data.get('password')
+            usermail = data.get('email')
+
+            if not username or not password or not usermail:
+                return jsonify({"message": "Missing required fields"}), 400
+
+            if User.query.filter_by(username=username).first():
+                return jsonify({"message": "Benutzername existiert bereits"}), 400
+            if User.query.filter_by(usermail=usermail).first():
+                return jsonify({"message": "Email existiert bereits"}), 400
+
+            new_user = User(username=username, usermail=usermail)
             new_user.set_password(password)
             db.session.add(new_user)
             db.session.commit()
-            flash('Benutzer erfolgreich registriert')
-            return redirect(url_for('login'))
+
+            return jsonify({"message": "Benutzer erfolgreich registriert"}), 201
+
+        except Exception as e:
+            print(f"Error during registration: {e}")
+            return jsonify({"message": f"Ein Fehler ist aufgetreten: {str(e)}"}), 500
+
+    # Render the registration page for GET requests
     return render_template('register.html')
 
 if __name__ == '__main__':

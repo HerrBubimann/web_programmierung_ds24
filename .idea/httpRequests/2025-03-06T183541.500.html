@@ -1,0 +1,992 @@
+<!doctype html>
+<html lang=en>
+<head>
+    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) NOT NULL constraint failed: user.usermail
+        [SQL: INSERT INTO user (username, usermail, password, password_hash) VALUES (?, ?, ?, ?)]
+        [parameters: (&#39;testuser&#39;, None, None, &#39;scrypt:32768:8:1$iTX81Dgw88qh6axK$5317043132b6a11160bd6e0573b6bd9f4d83b8294e8ae16e76ed7a4f9148df5f2cb56bf071bd0cab150652938cac24def14bab4a1931d79bd6d9b90f07351106&#39;)]
+        (Background on this error at: https://sqlalche.me/e/20/gkpj)
+        // Werkzeug Debugger</title>
+    <link rel="stylesheet" href="?__debugger__=yes&amp;cmd=resource&amp;f=style.css">
+    <link rel="shortcut icon"
+          href="?__debugger__=yes&amp;cmd=resource&amp;f=console.png">
+    <script src="?__debugger__=yes&amp;cmd=resource&amp;f=debugger.js"></script>
+    <script>
+        var CONSOLE_MODE = false,
+            EVALEX = true,
+            EVALEX_TRUSTED = false,
+            SECRET = "ZuuvINhnLKXC82SZ1Rbr";
+    </script>
+</head>
+<body style="background-color: #fff">
+<div class="debugger">
+    <h1>IntegrityError</h1>
+    <div class="detail">
+        <p class="errormsg">sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) NOT NULL constraint failed:
+            user.usermail
+            [SQL: INSERT INTO user (username, usermail, password, password_hash) VALUES (?, ?, ?, ?)]
+            [parameters: (&#39;testuser&#39;, None, None, &#39;scrypt:32768:8:1$iTX81Dgw88qh6axK$5317043132b6a11160bd6e0573b6bd9f4d83b8294e8ae16e76ed7a4f9148df5f2cb56bf071bd0cab150652938cac24def14bab4a1931d79bd6d9b90f07351106&#39;)]
+            (Background on this error at: https://sqlalche.me/e/20/gkpj)
+        </p>
+    </div>
+    <h2 class="traceback">Traceback <em>(most recent call last)</em></h2>
+    <div class="traceback">
+        <h3></h3>
+        <ul>
+            <li>
+                <div class="frame" id="frame-1380803243184">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\base.py"</cite>,
+                        line <em class="line">1964</em>,
+                        in <code class="function">_exec_single_context</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">                            </span>context,</pre>
+                        <pre class="line before"><span class="ws">                        </span>):</pre>
+                        <pre class="line before"><span class="ws">                            </span>evt_handled = True</pre>
+                        <pre class="line before"><span class="ws">                            </span>break</pre>
+                        <pre class="line before"><span class="ws">                </span>if not evt_handled:</pre>
+                        <pre class="line current"><span class="ws">                    </span>self.dialect.do_execute(
+<span class="ws">                    </span>^</pre>
+                        <pre class="line after"><span class="ws">                        </span>cursor, str_statement, effective_parameters, context</pre>
+                        <pre class="line after"><span class="ws">                    </span>)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">            </span>if self._has_events or self.engine._has_events:</pre>
+                        <pre class="line after"><span class="ws">                </span>self.dispatch.after_cursor_execute(</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803243328">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\default.py"</cite>,
+                        line <em class="line">942</em>,
+                        in <code class="function">do_execute</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">    </span>def do_executemany(self, cursor, statement, parameters, context=None):</pre>
+                        <pre class="line before"><span class="ws">        </span>cursor.executemany(statement, parameters)</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">    </span>def do_execute(self, cursor, statement, parameters, context=None):</pre>
+                        <pre class="line current"><span class="ws">        </span>cursor.execute(statement, parameters)
+<span class="ws">        </span>^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def do_execute_no_params(self, cursor, statement, context=None):</pre>
+                        <pre class="line after"><span class="ws">        </span>cursor.execute(statement)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def is_disconnect(self, e, connection, cursor):</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="exc-divider">The above exception was the direct cause of the following exception:</div>
+            <li>
+                <div class="frame" id="frame-1380803238576">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py"</cite>,
+                        line <em class="line">1536</em>,
+                        in <code class="function">__call__</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">    </span>) -&gt; cabc.Iterable[bytes]:</pre>
+                        <pre class="line before"><span class="ws">        </span>&#34;&#34;&#34;The WSGI server calls the Flask application object as the</pre>
+                        <pre class="line before"><span class="ws">        </span>WSGI application. This calls :meth:`wsgi_app`, which can be</pre>
+                        <pre class="line before"><span class="ws">        </span>wrapped to apply middleware.</pre>
+                        <pre class="line before"><span class="ws">        </span>&#34;&#34;&#34;</pre>
+                        <pre class="line current"><span class="ws">        </span>return self.wsgi_app(environ, start_response)
+<span class="ws">        </span>       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803238864">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py"</cite>,
+                        line <em class="line">1514</em>,
+                        in <code class="function">wsgi_app</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">            </span>try:</pre>
+                        <pre class="line before"><span class="ws">                </span>ctx.push()</pre>
+                        <pre class="line before"><span class="ws">                </span>response = self.full_dispatch_request()</pre>
+                        <pre class="line before"><span class="ws">            </span>except Exception as e:</pre>
+                        <pre class="line before"><span class="ws">                </span>error = e</pre>
+                        <pre class="line current"><span class="ws">                </span>response = self.handle_exception(e)
+<span class="ws">                </span>           ^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws">            </span>except:  # noqa: B001</pre>
+                        <pre class="line after"><span class="ws">                </span>error = sys.exc_info()[1]</pre>
+                        <pre class="line after"><span class="ws">                </span>raise</pre>
+                        <pre class="line after"><span class="ws">            </span>return response(environ, start_response)</pre>
+                        <pre class="line after"><span class="ws">        </span>finally:</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803238720">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask_cors\extension.py"</cite>,
+                        line <em class="line">176</em>,
+                        in <code class="function">wrapped_function</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">        </span># These error handlers will still respect the behavior of the route</pre>
+                        <pre class="line before"><span class="ws">        </span>if options.get(&#34;intercept_exceptions&#34;, True):</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span
+                                class="ws">            </span>def _after_request_decorator(f):</pre>
+                        <pre class="line before"><span class="ws">                </span>def wrapped_function(*args, **kwargs):</pre>
+                        <pre class="line current"><span class="ws">                    </span>return cors_after_request(app.make_response(f(*args, **kwargs)))
+<span class="ws">                    </span>                                            ^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">                </span>return wrapped_function</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">            </span>if hasattr(app, &#34;handle_exception&#34;):</pre>
+                        <pre class="line after"><span class="ws">                </span>app.handle_exception = _after_request_decorator(app.handle_exception)</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803238432">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py"</cite>,
+                        line <em class="line">1511</em>,
+                        in <code class="function">wsgi_app</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span
+                                class="ws">        </span>ctx = self.request_context(environ)</pre>
+                        <pre class="line before"><span
+                                class="ws">        </span>error: BaseException | None = None</pre>
+                        <pre class="line before"><span class="ws">        </span>try:</pre>
+                        <pre class="line before"><span class="ws">            </span>try:</pre>
+                        <pre class="line before"><span class="ws">                </span>ctx.push()</pre>
+                        <pre class="line current"><span class="ws">                </span>response = self.full_dispatch_request()
+<span class="ws">                </span>           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws">            </span>except Exception as e:</pre>
+                        <pre class="line after"><span class="ws">                </span>error = e</pre>
+                        <pre class="line after"><span class="ws">                </span>response = self.handle_exception(e)</pre>
+                        <pre class="line after"><span class="ws">            </span>except:  # noqa: B001</pre>
+                        <pre class="line after"><span class="ws">                </span>error = sys.exc_info()[1]</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803239008">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py"</cite>,
+                        line <em class="line">919</em>,
+                        in <code class="function">full_dispatch_request</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">            </span>request_started.send(self, _async_wrapper=self.ensure_sync)</pre>
+                        <pre class="line before"><span
+                                class="ws">            </span>rv = self.preprocess_request()</pre>
+                        <pre class="line before"><span class="ws">            </span>if rv is None:</pre>
+                        <pre class="line before"><span
+                                class="ws">                </span>rv = self.dispatch_request()</pre>
+                        <pre class="line before"><span class="ws">        </span>except Exception as e:</pre>
+                        <pre class="line current"><span class="ws">            </span>rv = self.handle_user_exception(e)
+<span class="ws">            </span>     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws">        </span>return self.finalize_request(rv)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def finalize_request(</pre>
+                        <pre class="line after"><span class="ws">        </span>self,</pre>
+                        <pre class="line after"><span class="ws">        </span>rv: ft.ResponseReturnValue | HTTPException,</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803239152">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask_cors\extension.py"</cite>,
+                        line <em class="line">176</em>,
+                        in <code class="function">wrapped_function</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">        </span># These error handlers will still respect the behavior of the route</pre>
+                        <pre class="line before"><span class="ws">        </span>if options.get(&#34;intercept_exceptions&#34;, True):</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span
+                                class="ws">            </span>def _after_request_decorator(f):</pre>
+                        <pre class="line before"><span class="ws">                </span>def wrapped_function(*args, **kwargs):</pre>
+                        <pre class="line current"><span class="ws">                    </span>return cors_after_request(app.make_response(f(*args, **kwargs)))
+<span class="ws">                    </span>                                            ^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">                </span>return wrapped_function</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">            </span>if hasattr(app, &#34;handle_exception&#34;):</pre>
+                        <pre class="line after"><span class="ws">                </span>app.handle_exception = _after_request_decorator(app.handle_exception)</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803239296">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py"</cite>,
+                        line <em class="line">917</em>,
+                        in <code class="function">full_dispatch_request</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">        </span>try:</pre>
+                        <pre class="line before"><span class="ws">            </span>request_started.send(self, _async_wrapper=self.ensure_sync)</pre>
+                        <pre class="line before"><span
+                                class="ws">            </span>rv = self.preprocess_request()</pre>
+                        <pre class="line before"><span class="ws">            </span>if rv is None:</pre>
+                        <pre class="line current"><span class="ws">                </span>rv = self.dispatch_request()
+<span class="ws">                </span>     ^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws">        </span>except Exception as e:</pre>
+                        <pre class="line after"><span
+                                class="ws">            </span>rv = self.handle_user_exception(e)</pre>
+                        <pre class="line after"><span class="ws">        </span>return self.finalize_request(rv)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def finalize_request(</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803239440">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py"</cite>,
+                        line <em class="line">902</em>,
+                        in <code class="function">dispatch_request</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">            </span>and req.method == &#34;OPTIONS&#34;</pre>
+                        <pre class="line before"><span class="ws">        </span>):</pre>
+                        <pre class="line before"><span class="ws">            </span>return self.make_default_options_response()</pre>
+                        <pre class="line before"><span class="ws">        </span># otherwise dispatch to the handler for that endpoint</pre>
+                        <pre class="line before"><span class="ws">        </span>view_args: dict[str, t.Any] = req.view_args  # type: ignore[assignment]</pre>
+                        <pre class="line current"><span class="ws">        </span>return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+<span class="ws">        </span>       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def full_dispatch_request(self) -&gt; Response:</pre>
+                        <pre class="line after"><span class="ws">        </span>&#34;&#34;&#34;Dispatches the request and on top of that performs request</pre>
+                        <pre class="line after"><span class="ws">        </span>pre and postprocessing as well as HTTP exception catching and</pre>
+                        <pre class="line after"><span class="ws">        </span>error handling.</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803239584">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\api\endpoints.py"</cite>,
+                        line <em class="line">51</em>,
+                        in <code class="function">register</code></h4>
+                    <div class="source ">
+                        <pre class="line before"><span class="ws">        </span>return jsonify({&#39;error&#39;: &#39;Benutzername existiert bereits&#39;}), 400</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">    </span>new_user = User(username=username)</pre>
+                        <pre class="line before"><span class="ws">    </span>new_user.set_password(password)</pre>
+                        <pre class="line before"><span class="ws">    </span>db.session.add(new_user)</pre>
+                        <pre class="line current"><span class="ws">    </span>db.session.commit()
+<span class="ws">    </span>^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>return jsonify({&#39;message&#39;: &#39;Benutzer erfolgreich registriert&#39;}), 201</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws"></span>@app.route(&#39;/login&#39;, methods=[&#39;POST&#39;])</pre>
+                        <pre class="line after"><span class="ws"></span>def login():</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803239728">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\scoping.py"</cite>,
+                        line <em class="line">599</em>,
+                        in <code class="function">commit</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">            </span>:ref:`asyncio_orm_avoid_lazyloads`</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">        </span>&#34;&#34;&#34;  # noqa: E501</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line current"><span class="ws">        </span>return self._proxied.commit()
+<span class="ws">        </span>       ^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def connection(</pre>
+                        <pre class="line after"><span class="ws">        </span>self,</pre>
+                        <pre class="line after"><span class="ws">        </span>bind_arguments: Optional[_BindArguments] = None,</pre>
+                        <pre class="line after"><span class="ws">        </span>execution_options: Optional[CoreExecuteOptionsParameter] = None,</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803239872">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\session.py"</cite>,
+                        line <em class="line">2032</em>,
+                        in <code class="function">commit</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">        </span>&#34;&#34;&#34;</pre>
+                        <pre class="line before"><span class="ws">        </span>trans = self._transaction</pre>
+                        <pre class="line before"><span class="ws">        </span>if trans is None:</pre>
+                        <pre class="line before"><span class="ws">            </span>trans = self._autobegin_t()</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line current"><span class="ws">        </span>trans.commit(_to_root=True)
+<span class="ws">        </span>^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def prepare(self) -&gt; None:</pre>
+                        <pre class="line after"><span class="ws">        </span>&#34;&#34;&#34;Prepare the current transaction in progress for two phase commit.</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">        </span>If no transaction is in progress, this method raises an</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803240016">
+                    <h4>File <cite class="filename">"&lt;string&gt;"</cite>,
+                        line <em class="line">2</em>,
+                        in <code class="function">commit</code></h4>
+                    <div class="source "></div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803240160">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\state_changes.py"</cite>,
+                        line <em class="line">139</em>,
+                        in <code class="function">_go</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">                    </span>)</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">            </span>self._current_fn = fn</pre>
+                        <pre class="line before"><span class="ws">            </span>self._next_state = _StateChangeStates.CHANGE_IN_PROGRESS</pre>
+                        <pre class="line before"><span class="ws">            </span>try:</pre>
+                        <pre class="line current"><span class="ws">                </span>ret_value = fn(self, *arg, **kw)
+<span class="ws">                </span>            ^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws">            </span>except:</pre>
+                        <pre class="line after"><span class="ws">                </span>raise</pre>
+                        <pre class="line after"><span class="ws">            </span>else:</pre>
+                        <pre class="line after"><span class="ws">                </span>if self._state is expect_state:</pre>
+                        <pre class="line after"><span class="ws">                    </span>return ret_value</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803240304">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\session.py"</cite>,
+                        line <em class="line">1313</em>,
+                        in <code class="function">commit</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">        </span>SessionTransactionState.CLOSED,</pre>
+                        <pre class="line before"><span class="ws">    </span>)</pre>
+                        <pre class="line before"><span class="ws">    </span>def commit(self, _to_root: bool = False) -&gt; None:</pre>
+                        <pre class="line before"><span class="ws">        </span>if self._state is not SessionTransactionState.PREPARED:</pre>
+                        <pre class="line before"><span class="ws">            </span>with self._expect_state(SessionTransactionState.PREPARED):</pre>
+                        <pre class="line current"><span class="ws">                </span>self._prepare_impl()
+<span class="ws">                </span>^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">        </span>if self._parent is None or self.nested:</pre>
+                        <pre class="line after"><span class="ws">            </span>for conn, trans, should_commit, autoclose in set(</pre>
+                        <pre class="line after"><span class="ws">                </span>self._connections.values()</pre>
+                        <pre class="line after"><span class="ws">            </span>):</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803240448">
+                    <h4>File <cite class="filename">"&lt;string&gt;"</cite>,
+                        line <em class="line">2</em>,
+                        in <code class="function">_prepare_impl</code></h4>
+                    <div class="source "></div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803240592">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\state_changes.py"</cite>,
+                        line <em class="line">139</em>,
+                        in <code class="function">_go</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">                    </span>)</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">            </span>self._current_fn = fn</pre>
+                        <pre class="line before"><span class="ws">            </span>self._next_state = _StateChangeStates.CHANGE_IN_PROGRESS</pre>
+                        <pre class="line before"><span class="ws">            </span>try:</pre>
+                        <pre class="line current"><span class="ws">                </span>ret_value = fn(self, *arg, **kw)
+<span class="ws">                </span>            ^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws">            </span>except:</pre>
+                        <pre class="line after"><span class="ws">                </span>raise</pre>
+                        <pre class="line after"><span class="ws">            </span>else:</pre>
+                        <pre class="line after"><span class="ws">                </span>if self._state is expect_state:</pre>
+                        <pre class="line after"><span class="ws">                    </span>return ret_value</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803240736">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\session.py"</cite>,
+                        line <em class="line">1288</em>,
+                        in <code class="function">_prepare_impl</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">        </span>if not self.session._flushing:</pre>
+                        <pre class="line before"><span
+                                class="ws">            </span>for _flush_guard in range(100):</pre>
+                        <pre class="line before"><span
+                                class="ws">                </span>if self.session._is_clean():</pre>
+                        <pre class="line before"><span class="ws">                    </span>break</pre>
+                        <pre class="line current"><span class="ws">                </span>self.session.flush()
+<span class="ws">                </span>^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws">            </span>else:</pre>
+                        <pre class="line after"><span class="ws">                </span>raise exc.FlushError(</pre>
+                        <pre class="line after"><span class="ws">                    </span>&#34;Over 100 subsequent flushes have occurred within &#34;</pre>
+                        <pre class="line after"><span class="ws">                    </span>&#34;session.commit() - is an after_flush() hook &#34;</pre>
+                        <pre class="line after"><span class="ws">                    </span>&#34;creating new objects?&#34;</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803240880">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\session.py"</cite>,
+                        line <em class="line">4353</em>,
+                        in <code class="function">flush</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">        </span>if self._is_clean():</pre>
+                        <pre class="line before"><span class="ws">            </span>return</pre>
+                        <pre class="line before"><span class="ws">        </span>try:</pre>
+                        <pre class="line before"><span class="ws">            </span>self._flushing = True</pre>
+                        <pre class="line current"><span class="ws">            </span>self._flush(objects)
+<span class="ws">            </span>^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws">        </span>finally:</pre>
+                        <pre class="line after"><span class="ws">            </span>self._flushing = False</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def _flush_warning(self, method: Any) -&gt; None:</pre>
+                        <pre class="line after"><span class="ws">        </span>util.warn(</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803241024">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\session.py"</cite>,
+                        line <em class="line">4488</em>,
+                        in <code class="function">_flush</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">            </span>self.dispatch.after_flush_postexec(self, flush_context)</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">            </span>transaction.commit()</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">        </span>except:</pre>
+                        <pre class="line current"><span class="ws">            </span>with util.safe_reraise():
+<span class="ws">            </span>     ^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws">                </span>transaction.rollback(_capture_exception=True)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def bulk_save_objects(</pre>
+                        <pre class="line after"><span class="ws">        </span>self,</pre>
+                        <pre class="line after"><span class="ws">        </span>objects: Iterable[object],</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803241168">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\util\langhelpers.py"</cite>,
+                        line <em class="line">146</em>,
+                        in <code class="function">__exit__</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">        </span># see #2703 for notes</pre>
+                        <pre class="line before"><span class="ws">        </span>if type_ is None:</pre>
+                        <pre class="line before"><span class="ws">            </span>exc_type, exc_value, exc_tb = self._exc_info</pre>
+                        <pre class="line before"><span class="ws">            </span>assert exc_value is not None</pre>
+                        <pre class="line before"><span class="ws">            </span>self._exc_info = None  # remove potential circular references</pre>
+                        <pre class="line current"><span class="ws">            </span>raise exc_value.with_traceback(exc_tb)
+<span class="ws">            </span>^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws">        </span>else:</pre>
+                        <pre class="line after"><span class="ws">            </span>self._exc_info = None  # remove potential circular references</pre>
+                        <pre class="line after"><span class="ws">            </span>assert value is not None</pre>
+                        <pre class="line after"><span class="ws">            </span>raise value.with_traceback(traceback)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803241312">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\session.py"</cite>,
+                        line <em class="line">4449</em>,
+                        in <code class="function">_flush</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">        </span>flush_context.transaction = transaction = self._autobegin_t()._begin()</pre>
+                        <pre class="line before"><span class="ws">        </span>try:</pre>
+                        <pre class="line before"><span class="ws">            </span>self._warn_on_events = True</pre>
+                        <pre class="line before"><span class="ws">            </span>try:</pre>
+                        <pre class="line current"><span class="ws">                </span>flush_context.execute()
+<span class="ws">                </span>^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws">            </span>finally:</pre>
+                        <pre class="line after"><span
+                                class="ws">                </span>self._warn_on_events = False</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">            </span>self.dispatch.after_flush(self, flush_context)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803241456">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\unitofwork.py"</cite>,
+                        line <em class="line">466</em>,
+                        in <code class="function">execute</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">                </span>while set_:</pre>
+                        <pre class="line before"><span class="ws">                    </span>n = set_.pop()</pre>
+                        <pre class="line before"><span class="ws">                    </span>n.execute_aggregate(self, set_)</pre>
+                        <pre class="line before"><span class="ws">        </span>else:</pre>
+                        <pre class="line before"><span class="ws">            </span>for rec in topological.sort(self.dependencies, postsort_actions):</pre>
+                        <pre class="line current"><span class="ws">                </span>rec.execute(self)
+<span class="ws">                </span>^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def finalize_flush_changes(self) -&gt; None:</pre>
+                        <pre class="line after"><span class="ws">        </span>&#34;&#34;&#34;Mark processed objects as clean / deleted after a successful</pre>
+                        <pre class="line after"><span class="ws">        </span>flush().</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803241600">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\unitofwork.py"</cite>,
+                        line <em class="line">642</em>,
+                        in <code class="function">execute</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">        </span>self.sort_key = (&#34;SaveUpdateAll&#34;, mapper._sort_key)</pre>
+                        <pre class="line before"><span
+                                class="ws">        </span>assert mapper is mapper.base_mapper</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">    </span>@util.preload_module(&#34;sqlalchemy.orm.persistence&#34;)</pre>
+                        <pre class="line before"><span class="ws">    </span>def execute(self, uow):</pre>
+                        <pre class="line current"><span class="ws">        </span>util.preloaded.orm_persistence.save_obj(
+<span class="ws">        </span>^</pre>
+                        <pre class="line after"><span class="ws">            </span>self.mapper,</pre>
+                        <pre class="line after"><span class="ws">            </span>uow.states_for_mapper_hierarchy(self.mapper, False, False),</pre>
+                        <pre class="line after"><span class="ws">            </span>uow,</pre>
+                        <pre class="line after"><span class="ws">        </span>)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803241744">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\persistence.py"</cite>,
+                        line <em class="line">93</em>,
+                        in <code class="function">save_obj</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">            </span>mapper,</pre>
+                        <pre class="line before"><span class="ws">            </span>table,</pre>
+                        <pre class="line before"><span class="ws">            </span>update,</pre>
+                        <pre class="line before"><span class="ws">        </span>)</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line current"><span class="ws">        </span>_emit_insert_statements(
+<span class="ws">        </span>^</pre>
+                        <pre class="line after"><span class="ws">            </span>base_mapper,</pre>
+                        <pre class="line after"><span class="ws">            </span>uowtransaction,</pre>
+                        <pre class="line after"><span class="ws">            </span>mapper,</pre>
+                        <pre class="line after"><span class="ws">            </span>table,</pre>
+                        <pre class="line after"><span class="ws">            </span>insert,</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803241888">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\persistence.py"</cite>,
+                        line <em class="line">1233</em>,
+                        in <code class="function">_emit_insert_statements</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">                            </span>statement.values(value_params),</pre>
+                        <pre class="line before"><span class="ws">                            </span>params,</pre>
+                        <pre class="line before"><span class="ws">                            </span>execution_options=execution_options,</pre>
+                        <pre class="line before"><span class="ws">                        </span>)</pre>
+                        <pre class="line before"><span class="ws">                    </span>else:</pre>
+                        <pre class="line current"><span class="ws">                        </span>result = connection.execute(
+<span class="ws">                        </span>         </pre>
+                        <pre class="line after"><span class="ws">                            </span>statement,</pre>
+                        <pre class="line after"><span class="ws">                            </span>params,</pre>
+                        <pre class="line after"><span class="ws">                            </span>execution_options=execution_options,</pre>
+                        <pre class="line after"><span class="ws">                        </span>)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803242032">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\base.py"</cite>,
+                        line <em class="line">1416</em>,
+                        in <code class="function">execute</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">        </span>try:</pre>
+                        <pre class="line before"><span class="ws">            </span>meth = statement._execute_on_connection</pre>
+                        <pre class="line before"><span class="ws">        </span>except AttributeError as err:</pre>
+                        <pre class="line before"><span class="ws">            </span>raise exc.ObjectNotExecutableError(statement) from err</pre>
+                        <pre class="line before"><span class="ws">        </span>else:</pre>
+                        <pre class="line current"><span class="ws">            </span>return meth(
+<span class="ws">            </span>       </pre>
+                        <pre class="line after"><span class="ws">                </span>self,</pre>
+                        <pre class="line after"><span class="ws">                </span>distilled_parameters,</pre>
+                        <pre class="line after"><span class="ws">                </span>execution_options or NO_OPTIONS,</pre>
+                        <pre class="line after"><span class="ws">            </span>)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803242176">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\elements.py"</cite>,
+                        line <em class="line">516</em>,
+                        in <code class="function">_execute_on_connection</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">        </span>execution_options: CoreExecuteOptionsParameter,</pre>
+                        <pre class="line before"><span class="ws">    </span>) -&gt; Result[Any]:</pre>
+                        <pre class="line before"><span class="ws">        </span>if self.supports_execution:</pre>
+                        <pre class="line before"><span class="ws">            </span>if TYPE_CHECKING:</pre>
+                        <pre class="line before"><span class="ws">                </span>assert isinstance(self, Executable)</pre>
+                        <pre class="line current"><span class="ws">            </span>return connection._execute_clauseelement(
+<span class="ws">            </span>       </pre>
+                        <pre class="line after"><span class="ws">                </span>self, distilled_params, execution_options</pre>
+                        <pre class="line after"><span class="ws">            </span>)</pre>
+                        <pre class="line after"><span class="ws">        </span>else:</pre>
+                        <pre class="line after"><span class="ws">            </span>raise exc.ObjectNotExecutableError(self)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803242320">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\base.py"</cite>,
+                        line <em class="line">1638</em>,
+                        in <code class="function">_execute_clauseelement</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">            </span>column_keys=keys,</pre>
+                        <pre class="line before"><span
+                                class="ws">            </span>for_executemany=for_executemany,</pre>
+                        <pre class="line before"><span class="ws">            </span>schema_translate_map=schema_translate_map,</pre>
+                        <pre class="line before"><span class="ws">            </span>linting=self.dialect.compiler_linting | compiler.WARN_LINTING,</pre>
+                        <pre class="line before"><span class="ws">        </span>)</pre>
+                        <pre class="line current"><span class="ws">        </span>ret = self._execute_context(
+<span class="ws">        </span>      </pre>
+                        <pre class="line after"><span class="ws">            </span>dialect,</pre>
+                        <pre class="line after"><span class="ws">            </span>dialect.execution_ctx_cls._init_compiled,</pre>
+                        <pre class="line after"><span class="ws">            </span>compiled_sql,</pre>
+                        <pre class="line after"><span class="ws">            </span>distilled_parameters,</pre>
+                        <pre class="line after"><span class="ws">            </span>execution_options,</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803242464">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\base.py"</cite>,
+                        line <em class="line">1843</em>,
+                        in <code class="function">_execute_context</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">        </span>context.pre_exec()</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">        </span>if context.execute_style is ExecuteStyle.INSERTMANYVALUES:</pre>
+                        <pre class="line before"><span class="ws">            </span>return self._exec_insertmany_context(dialect, context)</pre>
+                        <pre class="line before"><span class="ws">        </span>else:</pre>
+                        <pre class="line current"><span class="ws">            </span>return self._exec_single_context(
+<span class="ws">            </span>       </pre>
+                        <pre class="line after"><span class="ws">                </span>dialect, context, statement, parameters</pre>
+                        <pre class="line after"><span class="ws">            </span>)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def _exec_single_context(</pre>
+                        <pre class="line after"><span class="ws">        </span>self,</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803242608">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\base.py"</cite>,
+                        line <em class="line">1983</em>,
+                        in <code class="function">_exec_single_context</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">            </span>context.post_exec()</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">            </span>result = context._setup_result_proxy()</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">        </span>except BaseException as e:</pre>
+                        <pre class="line current"><span class="ws">            </span>self._handle_dbapi_exception(
+<span class="ws">            </span>^</pre>
+                        <pre class="line after"><span class="ws">                </span>e, str_statement, effective_parameters, cursor, context</pre>
+                        <pre class="line after"><span class="ws">            </span>)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">        </span>return result</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803242752">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\base.py"</cite>,
+                        line <em class="line">2352</em>,
+                        in <code class="function">_handle_dbapi_exception</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">            </span>if newraise:</pre>
+                        <pre class="line before"><span class="ws">                </span>raise newraise.with_traceback(exc_info[2]) from e</pre>
+                        <pre class="line before"><span class="ws">            </span>elif should_wrap:</pre>
+                        <pre class="line before"><span class="ws">                </span>assert sqlalchemy_exception is not None</pre>
+                        <pre class="line current"><span class="ws">                </span>raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+<span class="ws">                </span>^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws">            </span>else:</pre>
+                        <pre class="line after"><span
+                                class="ws">                </span>assert exc_info[1] is not None</pre>
+                        <pre class="line after"><span class="ws">                </span>raise exc_info[1].with_traceback(exc_info[2])</pre>
+                        <pre class="line after"><span class="ws">        </span>finally:</pre>
+                        <pre class="line after"><span class="ws">            </span>del self._reentrant_error</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803242896">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\base.py"</cite>,
+                        line <em class="line">1964</em>,
+                        in <code class="function">_exec_single_context</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">                            </span>context,</pre>
+                        <pre class="line before"><span class="ws">                        </span>):</pre>
+                        <pre class="line before"><span class="ws">                            </span>evt_handled = True</pre>
+                        <pre class="line before"><span class="ws">                            </span>break</pre>
+                        <pre class="line before"><span class="ws">                </span>if not evt_handled:</pre>
+                        <pre class="line current"><span class="ws">                    </span>self.dialect.do_execute(
+<span class="ws">                    </span>^</pre>
+                        <pre class="line after"><span class="ws">                        </span>cursor, str_statement, effective_parameters, context</pre>
+                        <pre class="line after"><span class="ws">                    </span>)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">            </span>if self._has_events or self.engine._has_events:</pre>
+                        <pre class="line after"><span class="ws">                </span>self.dispatch.after_cursor_execute(</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-1380803243040">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\default.py"</cite>,
+                        line <em class="line">942</em>,
+                        in <code class="function">do_execute</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">    </span>def do_executemany(self, cursor, statement, parameters, context=None):</pre>
+                        <pre class="line before"><span class="ws">        </span>cursor.executemany(statement, parameters)</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">    </span>def do_execute(self, cursor, statement, parameters, context=None):</pre>
+                        <pre class="line current"><span class="ws">        </span>cursor.execute(statement, parameters)
+<span class="ws">        </span>^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def do_execute_no_params(self, cursor, statement, context=None):</pre>
+                        <pre class="line after"><span class="ws">        </span>cursor.execute(statement)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def is_disconnect(self, e, connection, cursor):</pre>
+                    </div>
+                </div>
+        </ul>
+        <blockquote>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) NOT NULL constraint failed: user.usermail
+            [SQL: INSERT INTO user (username, usermail, password, password_hash) VALUES (?, ?, ?, ?)]
+            [parameters: (&#39;testuser&#39;, None, None, &#39;scrypt:32768:8:1$iTX81Dgw88qh6axK$5317043132b6a11160bd6e0573b6bd9f4d83b8294e8ae16e76ed7a4f9148df5f2cb56bf071bd0cab150652938cac24def14bab4a1931d79bd6d9b90f07351106&#39;)]
+            (Background on this error at: https://sqlalche.me/e/20/gkpj)
+        </blockquote>
+    </div>
+
+    <div class="plain">
+        <p>
+            This is the Copy/Paste friendly version of the traceback.
+        </p>
+        <textarea cols="50" rows="10" name="code" readonly>Traceback (most recent call last):
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\base.py&#34;, line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\default.py&#34;, line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: NOT NULL constraint failed: user.usermail
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py&#34;, line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py&#34;, line 1514, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask_cors\extension.py&#34;, line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py&#34;, line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py&#34;, line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask_cors\extension.py&#34;, line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py&#34;, line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py&#34;, line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\api\endpoints.py&#34;, line 51, in register
+    db.session.commit()
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\scoping.py&#34;, line 599, in commit
+    return self._proxied.commit()
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\session.py&#34;, line 2032, in commit
+    trans.commit(_to_root=True)
+  File &#34;&lt;string&gt;&#34;, line 2, in commit
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\state_changes.py&#34;, line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\session.py&#34;, line 1313, in commit
+    self._prepare_impl()
+  File &#34;&lt;string&gt;&#34;, line 2, in _prepare_impl
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\state_changes.py&#34;, line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\session.py&#34;, line 1288, in _prepare_impl
+    self.session.flush()
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\session.py&#34;, line 4353, in flush
+    self._flush(objects)
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\session.py&#34;, line 4488, in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\util\langhelpers.py&#34;, line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\session.py&#34;, line 4449, in _flush
+    flush_context.execute()
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\unitofwork.py&#34;, line 466, in execute
+    rec.execute(self)
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\unitofwork.py&#34;, line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\persistence.py&#34;, line 93, in save_obj
+    _emit_insert_statements(
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\persistence.py&#34;, line 1233, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\base.py&#34;, line 1416, in execute
+    return meth(
+           ^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\elements.py&#34;, line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\base.py&#34;, line 1638, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\base.py&#34;, line 1843, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\base.py&#34;, line 1983, in _exec_single_context
+    self._handle_dbapi_exception(
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\base.py&#34;, line 2352, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\base.py&#34;, line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\default.py&#34;, line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) NOT NULL constraint failed: user.usermail
+[SQL: INSERT INTO user (username, usermail, password, password_hash) VALUES (?, ?, ?, ?)]
+[parameters: (&#39;testuser&#39;, None, None, &#39;scrypt:32768:8:1$iTX81Dgw88qh6axK$5317043132b6a11160bd6e0573b6bd9f4d83b8294e8ae16e76ed7a4f9148df5f2cb56bf071bd0cab150652938cac24def14bab4a1931d79bd6d9b90f07351106&#39;)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+</textarea>
+    </div>
+    <div class="explanation">
+        The debugger caught an exception in your WSGI application. You can now
+        look at the traceback which led to the error. <span class="nojavascript">
+  If you enable JavaScript you can also use additional features such as code
+  execution (if the evalex feature is enabled), automatic pasting of the
+  exceptions and much more.</span>
+    </div>
+    <div class="footer">
+        Brought to you by <strong class="arthur">DON'T PANIC</strong>, your
+        friendly Werkzeug powered traceback interpreter.
+    </div>
+</div>
+
+<div class="pin-prompt">
+    <div class="inner">
+        <h3>Console Locked</h3>
+        <p>
+            The console is locked and needs to be unlocked by entering the PIN.
+            You can find the PIN printed out on the standard output of your
+            shell that runs the server.
+        <form>
+            <p>PIN:
+                <input type=text name=pin size=14>
+                <input type=submit name=btn value="Confirm Pin">
+        </form>
+    </div>
+</div>
+</body>
+</html>
+
+<!--
+
+Traceback (most recent call last):
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: NOT NULL constraint failed: user.usermail
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py", line 1514, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\api\endpoints.py", line 51, in register
+    db.session.commit()
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\scoping.py", line 599, in commit
+    return self._proxied.commit()
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\session.py", line 2032, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\session.py", line 1313, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\session.py", line 1288, in _prepare_impl
+    self.session.flush()
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    self._flush(objects)
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\session.py", line 4488, in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\session.py", line 4449, in _flush
+    flush_context.execute()
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\base.py", line 1638, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\base.py", line 1843, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\base.py", line 1983, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\base.py", line 2352, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\engine\default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) NOT NULL constraint failed: user.usermail
+[SQL: INSERT INTO user (username, usermail, password, password_hash) VALUES (?, ?, ?, ?)]
+[parameters: ('testuser', None, None, 'scrypt:32768:8:1$iTX81Dgw88qh6axK$5317043132b6a11160bd6e0573b6bd9f4d83b8294e8ae16e76ed7a4f9148df5f2cb56bf071bd0cab150652938cac24def14bab4a1931d79bd6d9b90f07351106')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+
+-->

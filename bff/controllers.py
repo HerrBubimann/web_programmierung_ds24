@@ -1,5 +1,5 @@
 from flask import current_app
-from .services import get_topics, get_learning_goals, create_topic, create_learning_goal
+from bff.services import get_topics, get_learning_goals, create_topic, create_learning_goal
 
 def get_user_topics(user_id):
     """

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="../static/styles.css">
+    <link rel="stylesheet" type="text/css" href="../static/register.css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div class="main">
+    <p class="sign" align="center">Register</p>
+    <form id="register-form" class="form1">
+        <input class="un" type="text" id="username" placeholder="Username" required>
+        <input class="un" type="email" id="email" placeholder="Email" required>
+        <input class="pass" type="password" id="password" placeholder="Password" required>
+        <input class="pass" type="password" id="confirm-password" placeholder="Confirm Password" required>
+        <button type="submit" class="submit" align="center">Register</button>
+    </form>
+    <p class="register" align="center">Already have an account? <a href="/login">Login here</a></p>
+</div>
+
+<script>
+    document.getElementById("register-form").addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const username = document.getElementById("username").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirm-password").value;
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match.");
+            return;
+        }
+
+        //try {
+        //  const response = await fetch('http://127.0.0.1:5000/register', {
+        //    method: 'POST',
+        //  mode: "no-cors",
+        //headers: {
+        //  'Content-Type': 'application/json',
+        //},
+        //credentials: "include",
+        //body: JSON.stringify({ username, email, password }),
+        //});
+
+        try {
+            const response = await fetch('http://127.0.0.1:5000/register', {
+                method: 'POST',
+                mode: "no-cors",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: "include",
+                body: JSON.stringify({username: "testuser", email: "test@example.com", password: "test123"}),
+            });
+
+
+            if (response.ok) {
+                const data = await response.json();
+                alert("Registration successful: " + data.message);
+                window.location.href = '/login';
+            } else {
+                // Handle non-OK responses
+                const errorData = await response.json();
+                alert("Registration failed: " + (errorData.message || "Unknown error"));
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert("An error occurred during the registration process.");
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="../static/styles.css">
+    <link rel="stylesheet" type="text/css" href="../static/login.css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div class="main">
+    <p class="sign" align="center">Sign in</p>
+    <form id="login-form" class="form1">
+        <input class="un" type="text" id="usernameOrEmail" placeholder="Username or Email" required>
+        <input class="pass" type="password" id="password" placeholder="Password" required>
+        <button type="submit" class="submit" align="center">Sign in</button>
+    </form>
+    <p class="register" align="center">No account yet? <a href="/register">Register here</a></p>
+</div>
+
+<script>
+    document.getElementById("login-form").addEventListener("submit", async function (event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        const usernameOrEmail = document.getElementById("usernameOrEmail").value;
+        const password = document.getElementById("password").value;
+
+        const isEmail = usernameOrEmail.includes("@");
+
+        try {
+            const response = await fetch('http://127.0.0.1:5001/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    [isEmail ? 'email' : 'username']: usernameOrEmail,
+                    password
+                }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // Redirect to another page upon successful login
+                window.location.href = '/';
+            } else {
+                alert("Login failed: " + data.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert("An error occurred during the login process.");
+        }
+    });
+</script>
+</body>
+</html>
