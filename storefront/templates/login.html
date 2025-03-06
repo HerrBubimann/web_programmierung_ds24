@@ -20,7 +20,7 @@
 
     <script>
         document.getElementById("login-form").addEventListener("submit", async function(event) {
-            event.preventDefault(); // Prevent the default form submission
+            event.preventDefault();
 
             const usernameOrEmail = document.getElementById("usernameOrEmail").value;
             const password = document.getElementById("password").value;
@@ -42,7 +42,6 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    // Redirect to another page upon successful login
                     window.location.href = '/';
                 } else {
                     alert("Login failed: " + data.message);
