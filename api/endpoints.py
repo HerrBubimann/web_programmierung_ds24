@@ -2,13 +2,17 @@ from flask import Flask, jsonify, request
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from api.models import db, User, Topic, LearningGoal
 from config import Config
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.config.from_object(Config)
 db.init_app(app)
 
+CORS(app)
+
 login_manager = LoginManager()
 login_manager.init_app(app)
+
 
 @login_manager.user_loader
 def load_user(user_id):
