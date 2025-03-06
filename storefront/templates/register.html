@@ -33,9 +33,9 @@
                 alert("Passwords do not match.");
                 return;
             }
-
+            
             try {
-                const response = await fetch('http://127.0.0.0:5000/register', {
+                const response = await fetch('http://127.0.0.1:5000/register', {
                     method: 'POST',
                     mode: "no-cors",
                     headers: {
@@ -43,6 +43,8 @@
                     },
                     body: JSON.stringify({ username, email, password }),
                 });
+
+                console.log(response);
 
                 if (response.ok) {
                     const data = await response.json();
