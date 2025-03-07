@@ -9,6 +9,7 @@ class User(db.Model):
     usermail = db.Column(db.String(100),unique=True, nullable=False)
     password_hash = db.Column(db.String(200), nullable=False)
     is_active = db.Column(db.Boolean, default=True)
+    is_authenticated = db.Column(db.Boolean, default=False)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -21,6 +22,9 @@ class User(db.Model):
 
     def get_id(self):
         return str(self.id)
+
+    def is_authenticated(self):
+        return self.is_authenticated
 
 class Topic(db.Model):
     id = db.Column(db.Integer, primary_key=True)

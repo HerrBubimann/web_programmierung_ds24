@@ -18,7 +18,7 @@ def load_user(user_id):
 
 @app.route('/')
 def index():
-    if current_user.is_authenticated: # der Nutzer muss noch authentifiziert werden und die topics und goals geladen
+    if current_user.is_authenticated:
         topics = get_user_topics(current_user.id)
         goals = get_user_learning_goals(current_user.id)
         return render_template('index.html', topics=topics, goals=goals)

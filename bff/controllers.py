@@ -7,7 +7,6 @@ def get_user_topics(user_id):
     """
     try:
         topics = get_topics()
-        # Filtere Themen nach user_id (falls die API dies nicht bereits tut)
         user_topics = [topic for topic in topics if topic.get('user_id') == user_id]
         return user_topics
     except Exception as e:
