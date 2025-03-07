@@ -3,7 +3,6 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 from bff.controllers import get_user_topics, get_user_learning_goals, add_topic_for_user, add_learning_goal_for_user
 from api.models import db, User
 from config import Config
-from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config.from_object(Config)
