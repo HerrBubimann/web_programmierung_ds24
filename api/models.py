@@ -9,7 +9,7 @@ class User(db.Model):
     usermail = db.Column(db.String(100),unique=True, nullable=False)
     password_hash = db.Column(db.String(200), nullable=False)
     is_active = db.Column(db.Boolean, default=True, nullable=False)
-    is_authenticated = db.Column(db.Boolean, default=False, nullable=False)
+    token = db.Column(db.String(100),unique=True, nullable=False)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)

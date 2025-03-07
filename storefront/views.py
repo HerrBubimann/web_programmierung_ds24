@@ -17,7 +17,7 @@ def load_user(user_id):
 
 @app.route('/')
 def index():
-    if current_user.is_authenticated:
+    if current_user.is_authenticated: #zu token umbauen
         topics = get_user_topics(current_user.id)
         goals = get_user_learning_goals(current_user.id)
         return render_template('index.html', topics=topics, goals=goals)
@@ -104,7 +104,7 @@ def register():
             print(f"Error during registration: {e}")
             return jsonify({"message": f"Ein Fehler ist aufgetreten: {str(e)}"}), 500
 
-    # Render the registration page for GET requests
+    # Get request
     return render_template('register.html')
 
 if __name__ == '__main__':
