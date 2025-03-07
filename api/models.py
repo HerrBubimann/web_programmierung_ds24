@@ -8,8 +8,8 @@ class User(db.Model):
     username = db.Column(db.String(100), unique=True, nullable=False)
     usermail = db.Column(db.String(100),unique=True, nullable=False)
     password_hash = db.Column(db.String(200), nullable=False)
-    is_active = db.Column(db.Boolean, default=True)
-    is_authenticated = db.Column(db.Boolean, default=False)
+    is_active = db.Column(db.Boolean, default=True, nullable=False)
+    is_authenticated = db.Column(db.Boolean, default=False, nullable=False)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
