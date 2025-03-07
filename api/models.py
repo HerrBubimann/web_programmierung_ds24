@@ -8,8 +8,9 @@ class User(db.Model):
     username = db.Column(db.String(100), unique=True, nullable=False)
     usermail = db.Column(db.String(100),unique=True, nullable=False)
     password_hash = db.Column(db.String(200), nullable=False)
-    is_active = db.Column(db.Boolean, default=True, nullable=False)
-    token = db.Column(db.String(100),unique=True, nullable=False)
+    is_active_user = db.Column(db.Boolean, default=True, nullable=False)
+
+    token = db.relationship('Token', backref='user', lazy=True)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -18,13 +19,16 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
     def is_active(self):
-        return self.is_active
+        return self.is_active_user
 
     def get_id(self):
         return str(self.id)
 
     def is_authenticated(self):
-        return self.is_authenticated
+        return self.has_token() and self.is_active_user
+
+    def has_token(self):
+        return self.token if self.token_id else None
 
 class Topic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -55,3 +59,9 @@ class LearningGoal(db.Model):
             'deadline': self.deadline,
             'user_id': self.user_id
         }
+
+class Token(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    token = db.Column(db.String(100), nullable=False)
+    token_erstelldatum = db.Column(db.DateTime, nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

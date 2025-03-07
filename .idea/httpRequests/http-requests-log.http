@@ -1,3 +1,34 @@
+POST http://localhost:5001/add-goal
+User-Agent: IntelliJ HTTP Client/PyCharm 2024.3.4
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+Cookie: session=.eJwlzjsOwjAMANC7ZGbwL7HTy1ROYqusLZ0QdweJd4L3LnuecR1le513PMr-XGUrQ9UwjIEUyBDqbBykmUTWWY3d-3CaziJhANZhDkwPrjCwJ1dzF48R3BDMAucSXzaUktSjhXCvCzRbNujLpNXuiTZ9kMgqv8h9xfnfYPl8AWgpLts.Z8n0Jg.F6BLWUUhzMTLTcc_O8esvFD27WI
+content-length: 0
+
+<> 2025-03-07T184532.401.html
+
+###
+
+GET http://localhost:5001
+User-Agent: IntelliJ HTTP Client/PyCharm 2024.3.4
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+cookie: session=.eJwlzjsOwjAMANC7ZGbwL7HTy1ROYqusLZ0QdweJd4L3LnuecR1le513PMr-XGUrQ9UwjIEUyBDqbBykmUTWWY3d-3CaziJhANZhDkwPrjCwJ1dzF48R3BDMAucSXzaUktSjhXCvCzRbNujLpNXuiTZ9kMgqv8h9xfnfYPl8AWgpLts.Z8n0Jg.F6BLWUUhzMTLTcc_O8esvFD27WI
+
+<> 2025-03-07T184438.200.html
+
+###
+
+GET http://localhost:5001
+User-Agent: IntelliJ HTTP Client/PyCharm 2024.3.4
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+cookie: session=.eJwlzjsOwjAMANC7ZGbwL7HTy1ROYqusLZ0QdweJd4L3LnuecR1le513PMr-XGUrQ9UwjIEUyBDqbBykmUTWWY3d-3CaziJhANZhDkwPrjCwJ1dzF48R3BDMAucSXzaUktSjhXCvCzRbNujLpNXuiTZ9kMgqv8h9xfnfYPl8AWgpLts.Z8n0Jg.F6BLWUUhzMTLTcc_O8esvFD27WI
+
+<> 2025-03-07T184436.200.html
+
+###
+
 POST http://localhost:5001/login
 Content-Type: application/json
 Content-Length: 55
@@ -742,42 +773,6 @@ Accept: */*
 content-length: 0
 
 <> 2025-03-06T184145.415.html
-
-###
-
-POST http://localhost:5000/register
-User-Agent: IntelliJ HTTP Client/PyCharm 2024.3.4
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2025-03-06T184133.415.json
-
-###
-
-GET http://localhost:5001/register
-User-Agent: IntelliJ HTTP Client/PyCharm 2024.3.4
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-
-<> 2025-03-06T184117.200.html
-
-###
-
-POST http://localhost:5001/register
-Content-Type: application/json
-Content-Length: 84
-User-Agent: IntelliJ HTTP Client/PyCharm 2024.3.4
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-
-{
-  "username": "testuser",
-  "email": "test@example.com",
-  "password": "test123"
-}
-
-<> 2025-03-06T184113.500.html
 
 ###
 

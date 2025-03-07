@@ -19,7 +19,6 @@ def get_user_learning_goals(user_id):
     """
     try:
         goals = get_learning_goals()
-        # Filtere Lernziele nach user_id (falls die API dies nicht bereits tut)
         user_goals = [goal for goal in goals if goal.get('user_id') == user_id]
         return user_goals
     except Exception as e:

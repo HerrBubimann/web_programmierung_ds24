@@ -3,6 +3,7 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 from api.models import db, User, Topic, LearningGoal
 from config import Config
 from flask_cors import CORS
+from bff.TokenManager import token_manager
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -63,14 +64,18 @@ def login():
     user = User.query.filter_by(username=username).first()
     if user and user.check_password(password):
         login_user(user)
+        token = token_manager.get_or_create_token(user.id)
         return jsonify({'message': 'Erfolgreich eingeloggt'}), 200
     return jsonify({'error': 'Ungültige Anmeldedaten'}), 401
 
 @app.route('/logout')
 @login_required
 def logout():
-    logout_user()
-    return jsonify({'message': 'Erfolgreich ausgeloggt'}), 200
+    if token_manager.delete_token(current_user.id):
+        logout_user()
+        return jsonify({'message': 'Erfolgreich ausgeloggt'}), 200
+    else:
+        return jsonify({"message": "Fehler beim Logout"}), 401
 
 @app.route('/topics', methods=['POST'])
 @login_required
@@ -105,4 +110,4 @@ def get_learning_goals():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True)
+    app.run(debug=True, port=5001)

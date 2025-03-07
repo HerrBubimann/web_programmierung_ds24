@@ -3,6 +3,7 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 from bff.controllers import get_user_topics, get_user_learning_goals, add_topic_for_user, add_learning_goal_for_user
 from api.models import db, User
 from config import Config
+from bff.TokenManager import token_manager
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -17,7 +18,7 @@ def load_user(user_id):
 
 @app.route('/')
 def index():
-    if current_user.is_authenticated: #zu token umbauen
+    if current_user.is_authenticated and token_manager.is_token_expired(current_user.id):
         topics = get_user_topics(current_user.id)
         goals = get_user_learning_goals(current_user.id)
         return render_template('index.html', topics=topics, goals=goals)
@@ -62,6 +63,7 @@ def login():
 
         if user and user.check_password(password):
             login_user(user)
+            token = token_manager.get_or_create_token(user.id)
             return jsonify({"message": "Login successful", "redirect": url_for('index')}), 200
         else:
             return jsonify({"message": "Ungültige Anmeldedaten"}), 401
@@ -70,8 +72,11 @@ def login():
 @app.route('/logout')
 @login_required
 def logout():
-    logout_user()
-    return redirect(url_for('login'))
+    if token_manager.delete_token(current_user.id):
+        logout_user()
+        return redirect(url_for('login'))
+    else:
+        return jsonify({"message": "Fehler beim Logout"}), 401
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -104,7 +109,6 @@ def register():
             print(f"Error during registration: {e}")
             return jsonify({"message": f"Ein Fehler ist aufgetreten: {str(e)}"}), 500
 
-    # Get request
     return render_template('register.html')
 
 if __name__ == '__main__':
