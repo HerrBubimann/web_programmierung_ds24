@@ -48,7 +48,6 @@
                     alert("Registration successful: " + data.message);
                     window.location.href = '/login';
                 } else {
-                    // Handle non-OK responses
                     const errorData = await response.json();
                     alert("Registration failed: " + (errorData.message || "Unknown error"));
                 }
