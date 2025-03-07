@@ -6,7 +6,7 @@ from config import Config
 
 app = Flask(__name__)
 app.config.from_object(Config)
-app.config['JWT_SECRET_KEY'] = 'your-secret-key'
+app.config['JWT_SECRET_KEY'] = 'eine_sehr_geheimer_key'
 db.init_app(app)
 
 jwt = JWTManager(app)
@@ -15,9 +15,11 @@ jwt = JWTManager(app)
 @jwt_required()
 def index():
     current_user_id = get_jwt_identity()
-    topics = get_user_topics(current_user_id)
-    goals = get_user_learning_goals(current_user_id)
-    return render_template('index.html', topics=topics, goals=goals)
+    if current_user_id:
+        topics = get_user_topics(current_user_id)
+        goals = get_user_learning_goals(current_user_id)
+        return render_template('index.html', topics=topics, goals=goals)
+
 
 @app.route('/add-topic', methods=['POST'])
 @jwt_required()
@@ -67,8 +69,6 @@ def login():
 @app.route('/logout', methods=['POST'])
 @jwt_required()
 def logout():
-    # Da JWT stateless ist, gibt es keine serverseitige Sitzung zu beenden.
-    # Der Client muss das Token einfach verwerfen.
     return jsonify({"message": "Logout successful"}), 200
 
 @app.route('/register', methods=['GET', 'POST'])

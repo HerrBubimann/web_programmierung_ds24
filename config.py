@@ -8,4 +8,4 @@ class Config:
     # SQLite-Datenbank-URI festlegen
     SQLALCHEMY_DATABASE_URI = f'sqlite:///{DATABASE_PATH}'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = 'eine_sehr_geheime_key'
+    SECRET_KEY = 'eine_sehr_geheimer_key'
