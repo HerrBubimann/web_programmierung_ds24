@@ -42,6 +42,9 @@
                 const data = await response.json();
 
                 if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    console.log('Login erfolgreich, Token gespeichert:', data.token);
+                    console.log('Weiterleitung zu /');
                     window.location.href = '/';
                 } else {
                     alert("Login failed: " + data.message);

@@ -1,3 +1,0 @@
-{
-  "message": "Ein Fehler ist aufgetreten: (sqlite3.OperationalError) no such table: user\n[SQL: SELECT user.id AS user_id, user.username AS user_username, user.usermail AS user_usermail, user.password_hash AS user_password_hash \nFROM user \nWHERE user.username = ?\n LIMIT ? OFFSET ?]\n[parameters: ('test', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-}

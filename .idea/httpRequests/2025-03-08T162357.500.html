@@ -1,0 +1,872 @@
+<!doctype html>
+<html lang=en>
+<head>
+    <title>sqlalchemy.exc.ArgumentError: SQL expression element or literal value expected, got &lt;Token 3&gt;.
+        // Werkzeug Debugger</title>
+    <link rel="stylesheet" href="?__debugger__=yes&amp;cmd=resource&amp;f=style.css">
+    <link rel="shortcut icon"
+          href="?__debugger__=yes&amp;cmd=resource&amp;f=console.png">
+    <script src="?__debugger__=yes&amp;cmd=resource&amp;f=debugger.js"></script>
+    <script>
+        var CONSOLE_MODE = false,
+            EVALEX = true,
+            EVALEX_TRUSTED = false,
+            SECRET = "PN6SdGeWETEudhD6LlAp";
+    </script>
+</head>
+<body style="background-color: #fff">
+<div class="debugger">
+    <h1>ArgumentError</h1>
+    <div class="detail">
+        <p class="errormsg">sqlalchemy.exc.ArgumentError: SQL expression element or literal value expected, got &lt;Token
+            3&gt;.
+        </p>
+    </div>
+    <h2 class="traceback">Traceback <em>(most recent call last)</em></h2>
+    <div class="traceback">
+        <h3></h3>
+        <ul>
+            <li>
+                <div class="frame" id="frame-2732503686240">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\coercions.py"</cite>,
+                        line <em class="line">803</em>,
+                        in <code class="function">_literal_coercion</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">        </span>bindparam_type=None,</pre>
+                        <pre class="line before"><span class="ws">        </span>argname=None,</pre>
+                        <pre class="line before"><span class="ws">        </span>**kw,</pre>
+                        <pre class="line before"><span class="ws">    </span>):</pre>
+                        <pre class="line before"><span class="ws">        </span>try:</pre>
+                        <pre class="line current"><span class="ws">            </span>return expr._bind_param(operator, element, type_=bindparam_type)
+<span class="ws">            </span>       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws">        </span>except exc.ArgumentError as err:</pre>
+                        <pre class="line after"><span class="ws">            </span>self._raise_for_expected(element, err=err)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def _post_coercion(self, resolved, *, expr, bindparam_type=None, **kw):</pre>
+                        <pre class="line after"><span class="ws">        </span>if resolved.type._isnull and not expr.type._isnull:</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503686384">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\elements.py"</cite>,
+                        line <em class="line">4606</em>,
+                        in <code class="function">_bind_param</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">        </span>operator: OperatorType,</pre>
+                        <pre class="line before"><span class="ws">        </span>obj: Any,</pre>
+                        <pre class="line before"><span class="ws">        </span>type_: Optional[TypeEngine[_T]] = None,</pre>
+                        <pre class="line before"><span class="ws">        </span>expanding: bool = False,</pre>
+                        <pre class="line before"><span class="ws">    </span>) -&gt; BindParameter[_T]:</pre>
+                        <pre class="line current"><span class="ws">        </span>return BindParameter(
+<span class="ws">        </span>       </pre>
+                        <pre class="line after"><span class="ws">            </span>self.key,</pre>
+                        <pre class="line after"><span class="ws">            </span>obj,</pre>
+                        <pre class="line after"><span
+                                class="ws">            </span>_compared_to_operator=operator,</pre>
+                        <pre class="line after"><span class="ws">            </span>_compared_to_type=self.type,</pre>
+                        <pre class="line after"><span class="ws">            </span>type_=type_,</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503686528">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\elements.py"</cite>,
+                        line <em class="line">2036</em>,
+                        in <code class="function">__init__</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">                </span>else:</pre>
+                        <pre class="line before"><span class="ws">                    </span>check_value = type_api._NO_VALUE_IN_LIST</pre>
+                        <pre class="line before"><span class="ws">            </span>else:</pre>
+                        <pre class="line before"><span class="ws">                </span>check_value = value</pre>
+                        <pre class="line before"><span
+                                class="ws">            </span>if _compared_to_type is not None:</pre>
+                        <pre class="line current"><span class="ws">                </span>self.type = _compared_to_type.coerce_compared_value(
+<span class="ws">                </span>            </pre>
+                        <pre class="line after"><span class="ws">                    </span>_compared_to_operator, check_value</pre>
+                        <pre class="line after"><span class="ws">                </span>)</pre>
+                        <pre class="line after"><span class="ws">            </span>else:</pre>
+                        <pre class="line after"><span class="ws">                </span>self.type = type_api._resolve_value_to_type(check_value)</pre>
+                        <pre class="line after"><span class="ws">        </span>elif isinstance(type_, type):</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503686672">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\type_api.py"</cite>,
+                        line <em class="line">1044</em>,
+                        in <code class="function">coerce_compared_value</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">        </span>needed by the DBAPI to both ides. It also provides the public method</pre>
+                        <pre class="line before"><span class="ws">        </span>:meth:`.TypeDecorator.coerce_compared_value` which is intended for</pre>
+                        <pre class="line before"><span class="ws">        </span>end-user customization of this behavior.</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">        </span>&#34;&#34;&#34;</pre>
+                        <pre class="line current"><span class="ws">        </span>_coerced_type = _resolve_value_to_type(value)
+<span class="ws">        </span>                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws">        </span>if (</pre>
+                        <pre class="line after"><span class="ws">            </span>_coerced_type is NULLTYPE</pre>
+                        <pre class="line after"><span class="ws">            </span>or _coerced_type._type_affinity is self._type_affinity</pre>
+                        <pre class="line after"><span class="ws">        </span>):</pre>
+                        <pre class="line after"><span class="ws">            </span>return self</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503686816">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\sqltypes.py"</cite>,
+                        line <em class="line">3816</em>,
+                        in <code class="function">_resolve_value_to_type</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">            </span>and</pre>
+                        <pre class="line before"><span class="ws">            </span># foil mock.Mock() and other impostors by ensuring</pre>
+                        <pre class="line before"><span class="ws">            </span># the inspection target itself self-inspects</pre>
+                        <pre class="line before"><span class="ws">            </span>insp.__class__ in inspection._registrars</pre>
+                        <pre class="line before"><span class="ws">        </span>):</pre>
+                        <pre class="line current"><span class="ws">            </span>raise exc.ArgumentError(
+<span class="ws">            </span>^</pre>
+                        <pre class="line after"><span class="ws">                </span>&#34;Object %r is not legal as a SQL literal value&#34; % (value,)</pre>
+                        <pre class="line after"><span class="ws">            </span>)</pre>
+                        <pre class="line after"><span class="ws">        </span>return NULLTYPE</pre>
+                        <pre class="line after"><span class="ws">    </span>else:</pre>
+                        <pre class="line after"><span class="ws">        </span>return _result_type._resolve_for_literal(  # type: ignore [union-attr]</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="exc-divider">The above exception was the direct cause of the following exception:</div>
+            <li>
+                <div class="frame" id="frame-2732503679616">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py"</cite>,
+                        line <em class="line">1536</em>,
+                        in <code class="function">__call__</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">    </span>) -&gt; cabc.Iterable[bytes]:</pre>
+                        <pre class="line before"><span class="ws">        </span>&#34;&#34;&#34;The WSGI server calls the Flask application object as the</pre>
+                        <pre class="line before"><span class="ws">        </span>WSGI application. This calls :meth:`wsgi_app`, which can be</pre>
+                        <pre class="line before"><span class="ws">        </span>wrapped to apply middleware.</pre>
+                        <pre class="line before"><span class="ws">        </span>&#34;&#34;&#34;</pre>
+                        <pre class="line current"><span class="ws">        </span>return self.wsgi_app(environ, start_response)
+<span class="ws">        </span>       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503680480">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py"</cite>,
+                        line <em class="line">1514</em>,
+                        in <code class="function">wsgi_app</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">            </span>try:</pre>
+                        <pre class="line before"><span class="ws">                </span>ctx.push()</pre>
+                        <pre class="line before"><span class="ws">                </span>response = self.full_dispatch_request()</pre>
+                        <pre class="line before"><span class="ws">            </span>except Exception as e:</pre>
+                        <pre class="line before"><span class="ws">                </span>error = e</pre>
+                        <pre class="line current"><span class="ws">                </span>response = self.handle_exception(e)
+<span class="ws">                </span>           ^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws">            </span>except:  # noqa: B001</pre>
+                        <pre class="line after"><span class="ws">                </span>error = sys.exc_info()[1]</pre>
+                        <pre class="line after"><span class="ws">                </span>raise</pre>
+                        <pre class="line after"><span class="ws">            </span>return response(environ, start_response)</pre>
+                        <pre class="line after"><span class="ws">        </span>finally:</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503680624">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py"</cite>,
+                        line <em class="line">1511</em>,
+                        in <code class="function">wsgi_app</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span
+                                class="ws">        </span>ctx = self.request_context(environ)</pre>
+                        <pre class="line before"><span
+                                class="ws">        </span>error: BaseException | None = None</pre>
+                        <pre class="line before"><span class="ws">        </span>try:</pre>
+                        <pre class="line before"><span class="ws">            </span>try:</pre>
+                        <pre class="line before"><span class="ws">                </span>ctx.push()</pre>
+                        <pre class="line current"><span class="ws">                </span>response = self.full_dispatch_request()
+<span class="ws">                </span>           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws">            </span>except Exception as e:</pre>
+                        <pre class="line after"><span class="ws">                </span>error = e</pre>
+                        <pre class="line after"><span class="ws">                </span>response = self.handle_exception(e)</pre>
+                        <pre class="line after"><span class="ws">            </span>except:  # noqa: B001</pre>
+                        <pre class="line after"><span class="ws">                </span>error = sys.exc_info()[1]</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503680768">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py"</cite>,
+                        line <em class="line">919</em>,
+                        in <code class="function">full_dispatch_request</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">            </span>request_started.send(self, _async_wrapper=self.ensure_sync)</pre>
+                        <pre class="line before"><span
+                                class="ws">            </span>rv = self.preprocess_request()</pre>
+                        <pre class="line before"><span class="ws">            </span>if rv is None:</pre>
+                        <pre class="line before"><span
+                                class="ws">                </span>rv = self.dispatch_request()</pre>
+                        <pre class="line before"><span class="ws">        </span>except Exception as e:</pre>
+                        <pre class="line current"><span class="ws">            </span>rv = self.handle_user_exception(e)
+<span class="ws">            </span>     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws">        </span>return self.finalize_request(rv)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def finalize_request(</pre>
+                        <pre class="line after"><span class="ws">        </span>self,</pre>
+                        <pre class="line after"><span class="ws">        </span>rv: ft.ResponseReturnValue | HTTPException,</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503680912">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py"</cite>,
+                        line <em class="line">917</em>,
+                        in <code class="function">full_dispatch_request</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">        </span>try:</pre>
+                        <pre class="line before"><span class="ws">            </span>request_started.send(self, _async_wrapper=self.ensure_sync)</pre>
+                        <pre class="line before"><span
+                                class="ws">            </span>rv = self.preprocess_request()</pre>
+                        <pre class="line before"><span class="ws">            </span>if rv is None:</pre>
+                        <pre class="line current"><span class="ws">                </span>rv = self.dispatch_request()
+<span class="ws">                </span>     ^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws">        </span>except Exception as e:</pre>
+                        <pre class="line after"><span
+                                class="ws">            </span>rv = self.handle_user_exception(e)</pre>
+                        <pre class="line after"><span class="ws">        </span>return self.finalize_request(rv)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def finalize_request(</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503681056">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py"</cite>,
+                        line <em class="line">902</em>,
+                        in <code class="function">dispatch_request</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">            </span>and req.method == &#34;OPTIONS&#34;</pre>
+                        <pre class="line before"><span class="ws">        </span>):</pre>
+                        <pre class="line before"><span class="ws">            </span>return self.make_default_options_response()</pre>
+                        <pre class="line before"><span class="ws">        </span># otherwise dispatch to the handler for that endpoint</pre>
+                        <pre class="line before"><span class="ws">        </span>view_args: dict[str, t.Any] = req.view_args  # type: ignore[assignment]</pre>
+                        <pre class="line current"><span class="ws">        </span>return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+<span class="ws">        </span>       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def full_dispatch_request(self) -&gt; Response:</pre>
+                        <pre class="line after"><span class="ws">        </span>&#34;&#34;&#34;Dispatches the request and on top of that performs request</pre>
+                        <pre class="line after"><span class="ws">        </span>pre and postprocessing as well as HTTP exception catching and</pre>
+                        <pre class="line after"><span class="ws">        </span>error handling.</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503681200">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\storefront\views.py"</cite>,
+                        line <em class="line">37</em>,
+                        in <code class="function">index</code></h4>
+                    <div class="source ">
+                        <pre class="line before"><span class="ws">    </span>return User.query.get(token_instance.user_id)</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws"></span>@app.route(&#39;/&#39;)</pre>
+                        <pre class="line before"><span class="ws"></span>def index():</pre>
+                        <pre class="line before"><span class="ws">    </span>token = request.headers.get(&#39;Authorization&#39;)</pre>
+                        <pre class="line current"><span class="ws">    </span>user = validate_token(token)
+<span class="ws">    </span>       ^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws">    </span>return jsonify({&#34;message&#34;: user}), 404</pre>
+                        <pre class="line after"><span class="ws">    </span>if user:</pre>
+                        <pre class="line after"><span class="ws">        </span>print(f&#34;Benutzer gefunden: {user.id}&#34;)</pre>
+                        <pre class="line after"><span class="ws">        </span>topics = get_user_topics(user.id)</pre>
+                        <pre class="line after"><span class="ws">        </span>goals = get_user_learning_goals(user.id)</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503681632">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\storefront\views.py"</cite>,
+                        line <em class="line">28</em>,
+                        in <code class="function">validate_token</code></h4>
+                    <div class="source ">
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">    </span>token_instance = Token.query.filter_by(token=token).first()</pre>
+                        <pre class="line before"><span class="ws">    </span>if token_instance is None:</pre>
+                        <pre class="line before"><span class="ws">        </span>return None</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line current"><span class="ws">    </span>if not token_manager.is_token_valid(token_instance, datetime.now()):
+<span class="ws">    </span>       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws">        </span>#return None</pre>
+                        <pre class="line after"><span class="ws">        </span>return token_manager.is_token_valid(token_instance, datetime.now())</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>return User.query.get(token_instance.user_id)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503681776">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\bff\TokenManager.py"</cite>,
+                        line <em class="line">15</em>,
+                        in <code class="function">is_token_valid</code></h4>
+                    <div class="source ">
+                        <pre class="line before"><span class="ws">    </span>def generate_token():</pre>
+                        <pre class="line before"><span class="ws">        </span>token = secrets.token_hex(16)</pre>
+                        <pre class="line before"><span class="ws">        </span>return token</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">    </span>def is_token_valid(self ,token, current_time):</pre>
+                        <pre class="line current"><span class="ws">        </span>if Token.query.filter_by(token=token).first():
+<span class="ws">        </span>   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws">            </span>creation_time = Token.query.filter_by(token=token).first().token_erstelldatum</pre>
+                        <pre class="line after"><span class="ws">            </span>if current_time - creation_time &lt; self.token_lifetime:</pre>
+                        <pre class="line after"><span class="ws">                </span>return True</pre>
+                        <pre class="line after"><span class="ws">        </span>return False</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503682064">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\query.py"</cite>,
+                        line <em class="line">1987</em>,
+                        in <code class="function">filter_by</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">        </span>&#34;&#34;&#34;</pre>
+                        <pre class="line before"><span
+                                class="ws">        </span>from_entity = self._filter_by_zero()</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">        </span>clauses = [</pre>
+                        <pre class="line current"><span class="ws">            </span>_entity_namespace_key(from_entity, key) == value
+<span class="ws">            </span>^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span
+                                class="ws">            </span>for key, value in kwargs.items()</pre>
+                        <pre class="line after"><span class="ws">        </span>]</pre>
+                        <pre class="line after"><span class="ws">        </span>return self.filter(*clauses)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>@_generative</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503682496">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\operators.py"</cite>,
+                        line <em class="line">584</em>,
+                        in <code class="function">__eq__</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">        </span>In a column context, produces the clause ``a = b``.</pre>
+                        <pre class="line before"><span class="ws">        </span>If the target is ``None``, produces ``a IS NULL``.</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">        </span>&#34;&#34;&#34;</pre>
+                        <pre class="line current"><span class="ws">        </span>return self.operate(eq, other)
+<span class="ws">        </span>       ^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def __ne__(self, other: Any) -&gt; ColumnOperators:  # type: ignore[override]</pre>
+                        <pre class="line after"><span class="ws">        </span>&#34;&#34;&#34;Implement the ``!=`` operator.</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">        </span>In a column context, produces the clause ``a != b``.</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503682784">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\attributes.py"</cite>,
+                        line <em class="line">453</em>,
+                        in <code class="function">operate</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">        </span>return self.__clause_element__().label(name)</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">    </span>def operate(</pre>
+                        <pre class="line before"><span class="ws">        </span>self, op: OperatorType, *other: Any, **kwargs: Any</pre>
+                        <pre class="line before"><span class="ws">    </span>) -&gt; ColumnElement[Any]:</pre>
+                        <pre class="line current"><span class="ws">        </span>return op(self.comparator, *other, **kwargs)  # type: ignore[no-any-return]  # noqa: E501
+<span class="ws">        </span>       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def reverse_operate(</pre>
+                        <pre class="line after"><span class="ws">        </span>self, op: OperatorType, other: Any, **kwargs: Any</pre>
+                        <pre class="line after"><span class="ws">    </span>) -&gt; ColumnElement[Any]:</pre>
+                        <pre class="line after"><span class="ws">        </span>return op(other, self.comparator, **kwargs)  # type: ignore[no-any-return]  # noqa: E501</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503683216">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\operators.py"</cite>,
+                        line <em class="line">584</em>,
+                        in <code class="function">__eq__</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">        </span>In a column context, produces the clause ``a = b``.</pre>
+                        <pre class="line before"><span class="ws">        </span>If the target is ``None``, produces ``a IS NULL``.</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">        </span>&#34;&#34;&#34;</pre>
+                        <pre class="line current"><span class="ws">        </span>return self.operate(eq, other)
+<span class="ws">        </span>       ^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def __ne__(self, other: Any) -&gt; ColumnOperators:  # type: ignore[override]</pre>
+                        <pre class="line after"><span class="ws">        </span>&#34;&#34;&#34;Implement the ``!=`` operator.</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">        </span>In a column context, produces the clause ``a != b``.</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503683360">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\properties.py"</cite>,
+                        line <em class="line">477</em>,
+                        in <code class="function">operate</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">            </span>return getattr(self.__clause_element__(), key)</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">        </span>def operate(</pre>
+                        <pre class="line before"><span class="ws">            </span>self, op: OperatorType, *other: Any, **kwargs: Any</pre>
+                        <pre class="line before"><span class="ws">        </span>) -&gt; ColumnElement[Any]:</pre>
+                        <pre class="line current"><span class="ws">            </span>return op(self.__clause_element__(), *other, **kwargs)  # type: ignore[no-any-return]  # noqa: E501
+<span class="ws">            </span>       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">        </span>def reverse_operate(</pre>
+                        <pre class="line after"><span class="ws">            </span>self, op: OperatorType, other: Any, **kwargs: Any</pre>
+                        <pre class="line after"><span class="ws">        </span>) -&gt; ColumnElement[Any]:</pre>
+                        <pre class="line after"><span
+                                class="ws">            </span>col = self.__clause_element__()</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503683504">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\annotation.py"</cite>,
+                        line <em class="line">371</em>,
+                        in <code class="function">__eq__</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">    </span>def __hash__(self) -&gt; int:</pre>
+                        <pre class="line before"><span class="ws">        </span>return self._hash</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span
+                                class="ws">    </span>def __eq__(self, other: Any) -&gt; bool:</pre>
+                        <pre class="line before"><span class="ws">        </span>if self._is_column_operators:</pre>
+                        <pre class="line current"><span class="ws">            </span>return self.__element.__class__.__eq__(self, other)
+<span class="ws">            </span>       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws">        </span>else:</pre>
+                        <pre class="line after"><span
+                                class="ws">            </span>return hash(other) == hash(self)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>@util.ro_non_memoized_property</pre>
+                        <pre class="line after"><span class="ws">    </span>def entity_namespace(self) -&gt; _EntityNamespace:</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503683648">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\operators.py"</cite>,
+                        line <em class="line">584</em>,
+                        in <code class="function">__eq__</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">        </span>In a column context, produces the clause ``a = b``.</pre>
+                        <pre class="line before"><span class="ws">        </span>If the target is ``None``, produces ``a IS NULL``.</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">        </span>&#34;&#34;&#34;</pre>
+                        <pre class="line current"><span class="ws">        </span>return self.operate(eq, other)
+<span class="ws">        </span>       ^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def __ne__(self, other: Any) -&gt; ColumnOperators:  # type: ignore[override]</pre>
+                        <pre class="line after"><span class="ws">        </span>&#34;&#34;&#34;Implement the ``!=`` operator.</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">        </span>In a column context, produces the clause ``a != b``.</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503683792">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\elements.py"</cite>,
+                        line <em class="line">1516</em>,
+                        in <code class="function">operate</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">        </span>self,</pre>
+                        <pre class="line before"><span class="ws">        </span>op: operators.OperatorType,</pre>
+                        <pre class="line before"><span class="ws">        </span>*other: Any,</pre>
+                        <pre class="line before"><span class="ws">        </span>**kwargs: Any,</pre>
+                        <pre class="line before"><span class="ws">    </span>) -&gt; ColumnElement[Any]:</pre>
+                        <pre class="line current"><span class="ws">        </span>return op(self.comparator, *other, **kwargs)  # type: ignore[no-any-return]  # noqa: E501
+<span class="ws">        </span>       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def reverse_operate(</pre>
+                        <pre class="line after"><span class="ws">        </span>self, op: operators.OperatorType, other: Any, **kwargs: Any</pre>
+                        <pre class="line after"><span class="ws">    </span>) -&gt; ColumnElement[Any]:</pre>
+                        <pre class="line after"><span class="ws">        </span>return op(other, self.comparator, **kwargs)  # type: ignore[no-any-return]  # noqa: E501</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503684944">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\operators.py"</cite>,
+                        line <em class="line">584</em>,
+                        in <code class="function">__eq__</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">        </span>In a column context, produces the clause ``a = b``.</pre>
+                        <pre class="line before"><span class="ws">        </span>If the target is ``None``, produces ``a IS NULL``.</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">        </span>&#34;&#34;&#34;</pre>
+                        <pre class="line current"><span class="ws">        </span>return self.operate(eq, other)
+<span class="ws">        </span>       ^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def __ne__(self, other: Any) -&gt; ColumnOperators:  # type: ignore[override]</pre>
+                        <pre class="line after"><span class="ws">        </span>&#34;&#34;&#34;Implement the ``!=`` operator.</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">        </span>In a column context, produces the clause ``a != b``.</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503685088">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\type_api.py"</cite>,
+                        line <em class="line">197</em>,
+                        in <code class="function">operate</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">        </span>) -&gt; ColumnElement[_CT]:</pre>
+                        <pre class="line before"><span class="ws">            </span>default_comparator = util.preloaded.sql_default_comparator</pre>
+                        <pre class="line before"><span class="ws">            </span>op_fn, addtl_kw = default_comparator.operator_lookup[op.__name__]</pre>
+                        <pre class="line before"><span class="ws">            </span>if kwargs:</pre>
+                        <pre class="line before"><span class="ws">                </span>addtl_kw = addtl_kw.union(kwargs)</pre>
+                        <pre class="line current"><span class="ws">            </span>return op_fn(self.expr, op, *other, **addtl_kw)
+<span class="ws">            </span>       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">        </span>@util.preload_module(&#34;sqlalchemy.sql.default_comparator&#34;)</pre>
+                        <pre class="line after"><span class="ws">        </span>def reverse_operate(</pre>
+                        <pre class="line after"><span class="ws">            </span>self, op: OperatorType, other: Any, **kwargs: Any</pre>
+                        <pre class="line after"><span class="ws">        </span>) -&gt; ColumnElement[_CT]:</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503685520">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\default_comparator.py"</cite>,
+                        line <em class="line">121</em>,
+                        in <code class="function">_boolean_compare</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">                    </span>&#34;Only &#39;=&#39;, &#39;!=&#39;, &#39;is_()&#39;, &#39;is_not()&#39;, &#34;</pre>
+                        <pre class="line before"><span class="ws">                    </span>&#34;&#39;is_distinct_from()&#39;, &#39;is_not_distinct_from()&#39; &#34;</pre>
+                        <pre class="line before"><span class="ws">                    </span>&#34;operators can be used with None/True/False&#34;</pre>
+                        <pre class="line before"><span class="ws">                </span>)</pre>
+                        <pre class="line before"><span class="ws">    </span>else:</pre>
+                        <pre class="line current"><span class="ws">        </span>obj = coercions.expect(
+<span class="ws">        </span>      </pre>
+                        <pre class="line after"><span class="ws">            </span>roles.BinaryElementRole, element=obj, operator=op, expr=expr</pre>
+                        <pre class="line after"><span class="ws">        </span>)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>if reverse:</pre>
+                        <pre class="line after"><span class="ws">        </span>return OperatorExpression._construct_for_op(</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503685664">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\coercions.py"</cite>,
+                        line <em class="line">395</em>,
+                        in <code class="function">expect</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">                            </span>resolved = insp.__clause_element__()</pre>
+                        <pre class="line before"><span class="ws">                        </span>except AttributeError:</pre>
+                        <pre class="line before"><span class="ws">                            </span>impl._raise_for_expected(original_element, argname)</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">                </span>if resolved is None:</pre>
+                        <pre class="line current"><span class="ws">                    </span>resolved = impl._literal_coercion(
+<span class="ws">                    </span>           </pre>
+                        <pre class="line after"><span class="ws">                        </span>element, argname=argname, **kw</pre>
+                        <pre class="line after"><span class="ws">                    </span>)</pre>
+                        <pre class="line after"><span class="ws">            </span>else:</pre>
+                        <pre class="line after"><span class="ws">                </span>resolved = element</pre>
+                        <pre class="line after"><span class="ws">    </span>elif isinstance(element, lambdas.PyWrapper):</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503685808">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\coercions.py"</cite>,
+                        line <em class="line">805</em>,
+                        in <code class="function">_literal_coercion</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">        </span>**kw,</pre>
+                        <pre class="line before"><span class="ws">    </span>):</pre>
+                        <pre class="line before"><span class="ws">        </span>try:</pre>
+                        <pre class="line before"><span class="ws">            </span>return expr._bind_param(operator, element, type_=bindparam_type)</pre>
+                        <pre class="line before"><span class="ws">        </span>except exc.ArgumentError as err:</pre>
+                        <pre class="line current"><span class="ws">            </span>self._raise_for_expected(element, err=err)
+<span class="ws">            </span>^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws">    </span>def _post_coercion(self, resolved, *, expr, bindparam_type=None, **kw):</pre>
+                        <pre class="line after"><span class="ws">        </span>if resolved.type._isnull and not expr.type._isnull:</pre>
+                        <pre class="line after"><span class="ws">            </span>resolved = resolved._with_binary_element_type(</pre>
+                        <pre class="line after"><span class="ws">                </span>bindparam_type if bindparam_type is not None else expr.type</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503685952">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\coercions.py"</cite>,
+                        line <em class="line">784</em>,
+                        in <code class="function">_raise_for_expected</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">                </span>&#34;as a whole, use the .table_valued() method.&#34;</pre>
+                        <pre class="line before"><span class="ws">            </span>)</pre>
+                        <pre class="line before"><span class="ws">        </span>else:</pre>
+                        <pre class="line before"><span class="ws">            </span>advice = None</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line current"><span class="ws">        </span>return super()._raise_for_expected(
+<span class="ws">        </span>       </pre>
+                        <pre class="line after"><span class="ws">            </span>element, argname=argname, resolved=resolved, advice=advice, **kw</pre>
+                        <pre class="line after"><span class="ws">        </span>)</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws"></span>class BinaryElementImpl(ExpressionElementImpl, RoleImpl):</pre>
+                    </div>
+                </div>
+
+            <li>
+                <div class="frame" id="frame-2732503686096">
+                    <h4>File <cite class="filename">"C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\coercions.py"</cite>,
+                        line <em class="line">518</em>,
+                        in <code class="function">_raise_for_expected</code></h4>
+                    <div class="source library">
+                        <pre class="line before"><span class="ws">            </span>msg = &#34;%s expected, got %s.&#34; % (self.name, got)</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line before"><span class="ws">        </span>if advice:</pre>
+                        <pre class="line before"><span class="ws">            </span>msg += &#34; &#34; + advice</pre>
+                        <pre class="line before"><span class="ws"></span> </pre>
+                        <pre class="line current"><span class="ws">        </span>raise exc.ArgumentError(msg, code=code) from err
+<span class="ws">        </span>^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                        <pre class="line after"><span class="ws"></span>class _Deannotate:</pre>
+                        <pre class="line after"><span class="ws">    </span>__slots__ = ()</pre>
+                        <pre class="line after"><span class="ws"></span> </pre>
+                    </div>
+                </div>
+        </ul>
+        <blockquote>sqlalchemy.exc.ArgumentError: SQL expression element or literal value expected, got &lt;Token 3&gt;.
+        </blockquote>
+    </div>
+
+    <div class="plain">
+        <p>
+            This is the Copy/Paste friendly version of the traceback.
+        </p>
+        <textarea cols="50" rows="10" name="code" readonly>Traceback (most recent call last):
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\coercions.py&#34;, line 803, in _literal_coercion
+    return expr._bind_param(operator, element, type_=bindparam_type)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\elements.py&#34;, line 4606, in _bind_param
+    return BindParameter(
+           ^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\elements.py&#34;, line 2036, in __init__
+    self.type = _compared_to_type.coerce_compared_value(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\type_api.py&#34;, line 1044, in coerce_compared_value
+    _coerced_type = _resolve_value_to_type(value)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\sqltypes.py&#34;, line 3816, in _resolve_value_to_type
+    raise exc.ArgumentError(
+sqlalchemy.exc.ArgumentError: Object &lt;Token 3&gt; is not legal as a SQL literal value
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py&#34;, line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py&#34;, line 1514, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py&#34;, line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py&#34;, line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py&#34;, line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py&#34;, line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\storefront\views.py&#34;, line 37, in index
+    user = validate_token(token)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\storefront\views.py&#34;, line 28, in validate_token
+    if not token_manager.is_token_valid(token_instance, datetime.now()):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\bff\TokenManager.py&#34;, line 15, in is_token_valid
+    if Token.query.filter_by(token=token).first():
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\query.py&#34;, line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\operators.py&#34;, line 584, in __eq__
+    return self.operate(eq, other)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\attributes.py&#34;, line 453, in operate
+    return op(self.comparator, *other, **kwargs)  # type: ignore[no-any-return]  # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\operators.py&#34;, line 584, in __eq__
+    return self.operate(eq, other)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\properties.py&#34;, line 477, in operate
+    return op(self.__clause_element__(), *other, **kwargs)  # type: ignore[no-any-return]  # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\annotation.py&#34;, line 371, in __eq__
+    return self.__element.__class__.__eq__(self, other)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\operators.py&#34;, line 584, in __eq__
+    return self.operate(eq, other)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\elements.py&#34;, line 1516, in operate
+    return op(self.comparator, *other, **kwargs)  # type: ignore[no-any-return]  # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\operators.py&#34;, line 584, in __eq__
+    return self.operate(eq, other)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\type_api.py&#34;, line 197, in operate
+    return op_fn(self.expr, op, *other, **addtl_kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\default_comparator.py&#34;, line 121, in _boolean_compare
+    obj = coercions.expect(
+          ^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\coercions.py&#34;, line 395, in expect
+    resolved = impl._literal_coercion(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\coercions.py&#34;, line 805, in _literal_coercion
+    self._raise_for_expected(element, err=err)
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\coercions.py&#34;, line 784, in _raise_for_expected
+    return super()._raise_for_expected(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\coercions.py&#34;, line 518, in _raise_for_expected
+    raise exc.ArgumentError(msg, code=code) from err
+sqlalchemy.exc.ArgumentError: SQL expression element or literal value expected, got &lt;Token 3&gt;.
+</textarea>
+    </div>
+    <div class="explanation">
+        The debugger caught an exception in your WSGI application. You can now
+        look at the traceback which led to the error. <span class="nojavascript">
+  If you enable JavaScript you can also use additional features such as code
+  execution (if the evalex feature is enabled), automatic pasting of the
+  exceptions and much more.</span>
+    </div>
+    <div class="footer">
+        Brought to you by <strong class="arthur">DON'T PANIC</strong>, your
+        friendly Werkzeug powered traceback interpreter.
+    </div>
+</div>
+
+<div class="pin-prompt">
+    <div class="inner">
+        <h3>Console Locked</h3>
+        <p>
+            The console is locked and needs to be unlocked by entering the PIN.
+            You can find the PIN printed out on the standard output of your
+            shell that runs the server.
+        <form>
+            <p>PIN:
+                <input type=text name=pin size=14>
+                <input type=submit name=btn value="Confirm Pin">
+        </form>
+    </div>
+</div>
+</body>
+</html>
+
+<!--
+
+Traceback (most recent call last):
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\coercions.py", line 803, in _literal_coercion
+    return expr._bind_param(operator, element, type_=bindparam_type)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\elements.py", line 4606, in _bind_param
+    return BindParameter(
+           ^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\elements.py", line 2036, in __init__
+    self.type = _compared_to_type.coerce_compared_value(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\type_api.py", line 1044, in coerce_compared_value
+    _coerced_type = _resolve_value_to_type(value)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\sqltypes.py", line 3816, in _resolve_value_to_type
+    raise exc.ArgumentError(
+sqlalchemy.exc.ArgumentError: Object <Token 3> is not legal as a SQL literal value
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py", line 1514, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\storefront\views.py", line 37, in index
+    user = validate_token(token)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\storefront\views.py", line 28, in validate_token
+    if not token_manager.is_token_valid(token_instance, datetime.now()):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\bff\TokenManager.py", line 15, in is_token_valid
+    if Token.query.filter_by(token=token).first():
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\query.py", line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\operators.py", line 584, in __eq__
+    return self.operate(eq, other)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\attributes.py", line 453, in operate
+    return op(self.comparator, *other, **kwargs)  # type: ignore[no-any-return]  # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\operators.py", line 584, in __eq__
+    return self.operate(eq, other)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\orm\properties.py", line 477, in operate
+    return op(self.__clause_element__(), *other, **kwargs)  # type: ignore[no-any-return]  # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\annotation.py", line 371, in __eq__
+    return self.__element.__class__.__eq__(self, other)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\operators.py", line 584, in __eq__
+    return self.operate(eq, other)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\elements.py", line 1516, in operate
+    return op(self.comparator, *other, **kwargs)  # type: ignore[no-any-return]  # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\operators.py", line 584, in __eq__
+    return self.operate(eq, other)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\type_api.py", line 197, in operate
+    return op_fn(self.expr, op, *other, **addtl_kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\default_comparator.py", line 121, in _boolean_compare
+    obj = coercions.expect(
+          ^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\coercions.py", line 395, in expect
+    resolved = impl._literal_coercion(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\coercions.py", line 805, in _literal_coercion
+    self._raise_for_expected(element, err=err)
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\coercions.py", line 784, in _raise_for_expected
+    return super()._raise_for_expected(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\janje\PycharmProjects\web_programmierung_ds24\venv1\Lib\site-packages\sqlalchemy\sql\coercions.py", line 518, in _raise_for_expected
+    raise exc.ArgumentError(msg, code=code) from err
+sqlalchemy.exc.ArgumentError: SQL expression element or literal value expected, got <Token 3>.
+
+
+-->

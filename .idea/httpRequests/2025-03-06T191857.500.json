@@ -1,3 +1,0 @@
-{
-  "message": "Ein Fehler ist aufgetreten: (sqlite3.IntegrityError) NOT NULL constraint failed: user.password\n[SQL: INSERT INTO user (username, usermail, password_hash) VALUES (?, ?, ?)]\n[parameters: ('test', 'test@example.com', 'scrypt:32768:8:1$tpHkAqJJzp8DieM0$09d43878227819468125ecafd9c3649053919879c95c19fd245fbd930a4d54e26b1d9fc6807e733eae52b204fb89e6566bc5baaa1a443046cc2758a60b6915f8')]\n(Background on this error at: https://sqlalche.me/e/20/gkpj)"
-}

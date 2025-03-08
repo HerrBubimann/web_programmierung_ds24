@@ -12,20 +12,14 @@
     <div class="container">
         <h1>Meine Lernziele</h1>
         <h2>Themen</h2>
-        <ul>
-            {% for topic in topics %}
-            <li>{{ topic.name }} (Priorität: {{ topic.priority }})</li>
-            {% endfor %}
+        <ul id="topics-list">
         </ul>
         <h2>Lernziele</h2>
-        <ul>
-            {% for goal in goals %}
-            <li>{{ goal.description }} (Deadline: {{ goal.deadline }})</li>
-            {% endfor %}
+        <ul id="goals-list">
         </ul>
 
         <h2>Neues Thema hinzufügen</h2>
-        <form method="POST" action="{{ url_for('create_topic') }}">
+        <form id="create-topic-form">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
             <br>
@@ -40,7 +34,7 @@
         </form>
 
         <h2>Neues Lernziel hinzufügen</h2>
-        <form method="POST" action="{{ url_for('create_learning_goal') }}">
+        <form id="create-goal-form">
             <label for="topic_id">Thema ID:</label>
             <input type="number" id="topic_id" name="topic_id" required>
             <br>
@@ -53,5 +47,99 @@
             <button type="submit">Lernziel hinzufügen</button>
         </form>
     </div>
+
+    <script>
+        // Funktion zum Laden der Themen
+        async function loadTopics() {
+            try {
+                const response = await fetch('/topics');
+                const data = await response.json();
+                const topicsList = document.getElementById('topics-list');
+                topicsList.innerHTML = '';
+
+                data.forEach(topic => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${topic.name} (Priorität: ${topic.priority})`;
+                    topicsList.appendChild(listItem);
+                });
+            } catch (error) {
+                console.error('Fehler beim Laden der Themen:', error);
+            }
+        }
+
+        async function loadGoals() {
+            try {
+                const response = await fetch('/learning_goals');
+                const data = await response.json();
+                const goalsList = document.getElementById('goals-list');
+                goalsList.innerHTML = '';
+
+                data.forEach(goal => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${goal.description} (Deadline: ${goal.deadline})`;
+                    goalsList.appendChild(listItem);
+                });
+            } catch (error) {
+                console.error('Fehler beim Laden der Lernziele:', error);
+            }
+        }
+
+        // Daten laden, wenn die Seite geladen wird
+        document.addEventListener('DOMContentLoaded', function () {
+            loadTopics();
+            loadGoals();
+        });
+
+        // Neues Thema hinzufügen
+        document.getElementById('create-topic-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formData = {
+                name: document.getElementById('name').value,
+                priority: document.getElementById('priority').value
+            };
+
+            try {
+                const response = await fetch('/topics', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                const data = await response.json();
+                console.log('Success:', data);
+                loadTopics(); // Themen neu laden
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        // Neues Lernziel hinzufügen
+        document.getElementById('create-goal-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formData = {
+                topic_id: document.getElementById('topic_id').value,
+                description: document.getElementById('description').value,
+                deadline: document.getElementById('deadline').value
+            };
+
+            try {
+                const response = await fetch('/learning_goals', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                const data = await response.json();
+                console.log('Success:', data);
+                loadGoals(); // Lernziele neu laden
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
 </body>
 </html>
