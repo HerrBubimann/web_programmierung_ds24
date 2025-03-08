@@ -35,8 +35,10 @@
 
         <h2>Neues Lernziel hinzufügen</h2>
         <form id="create-goal-form">
-            <label for="topic_id">Thema ID:</label>
-            <input type="number" id="topic_id" name="topic_id" required>
+            <label for="topic_id">Thema:</label>
+            <select id="topic_id" name="topic_id" required>
+                <option value="" disabled selected>Thema auswählen...</option>
+            </select>
             <br>
             <label for="description">Beschreibung:</label>
             <input type="text" id="description" name="description" required>
@@ -49,7 +51,6 @@
     </div>
 
     <script>
-        // Funktion zum Laden der Themen
         async function loadTopics() {
             try {
                 const response = await fetch('/topics');
@@ -57,10 +58,18 @@
                 const topicsList = document.getElementById('topics-list');
                 topicsList.innerHTML = '';
 
+                const topicDropdown = document.getElementById('topic_id');
+                topicDropdown.innerHTML = '<option value="" disabled selected>Thema auswählen...</option>';
+
                 data.forEach(topic => {
                     const listItem = document.createElement('li');
                     listItem.textContent = `${topic.name} (Priorität: ${topic.priority})`;
                     topicsList.appendChild(listItem);
+
+                    const option = document.createElement('option');
+                    option.value = topic.id;
+                    option.textContent = topic.name;
+                    topicDropdown.appendChild(option);
                 });
             } catch (error) {
                 console.error('Fehler beim Laden der Themen:', error);
@@ -84,13 +93,11 @@
             }
         }
 
-        // Daten laden, wenn die Seite geladen wird
         document.addEventListener('DOMContentLoaded', function () {
             loadTopics();
             loadGoals();
         });
 
-        // Neues Thema hinzufügen
         document.getElementById('create-topic-form').addEventListener('submit', async function(event) {
             event.preventDefault();
             const formData = {
@@ -109,17 +116,16 @@
 
                 const data = await response.json();
                 console.log('Success:', data);
-                loadTopics(); // Themen neu laden
+                loadTopics();
             } catch (error) {
                 console.error('Error:', error);
             }
         });
 
-        // Neues Lernziel hinzufügen
         document.getElementById('create-goal-form').addEventListener('submit', async function(event) {
             event.preventDefault();
             const formData = {
-                topic_id: document.getElementById('topic_id').value,
+                topic_id: parseInt(document.getElementById('topic_id').value),
                 description: document.getElementById('description').value,
                 deadline: document.getElementById('deadline').value
             };
@@ -135,7 +141,7 @@
 
                 const data = await response.json();
                 console.log('Success:', data);
-                loadGoals(); // Lernziele neu laden
+                loadGoals();
             } catch (error) {
                 console.error('Error:', error);
             }

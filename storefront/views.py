@@ -1,6 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, request, flash, jsonify, make_response
 from flask_login import LoginManager, login_user, logout_user
-from bff.controllers import add_topic_for_user, add_learning_goal_for_user
 from datenbank.models import db, User, Token, Topic, LearningGoal
 from config import Config
 from bff.TokenManager import token_manager
