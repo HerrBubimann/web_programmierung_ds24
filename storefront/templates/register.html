@@ -30,7 +30,7 @@
             const confirmPassword = document.getElementById("confirm-password").value;
 
             if (password !== confirmPassword) {
-                alert("Passwords do not match.");
+                alert("Passwörter sind nicht gleich.");
                 return;
             }
 
@@ -53,7 +53,7 @@
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert("An error occurred during the registration process.");
+                alert("Während des Registrierungsprozesses ist ein Fehler aufgetreten.");
             }
         });
     </script>
