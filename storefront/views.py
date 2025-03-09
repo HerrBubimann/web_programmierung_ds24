@@ -92,7 +92,7 @@ def register():
             usermail = data.get('email')
 
             if not username or not password or not usermail:
-                return jsonify({"message": "Missing required fields"}), 400
+                return jsonify({"message": "Fehlende Pflichtfelder"}), 400
 
             if User.query.filter_by(username=username).first():
                 return jsonify({"message": "Benutzername existiert bereits"}), 400
@@ -172,7 +172,7 @@ def get_learning_goals():
             })
         return jsonify(goals_data), 200
     except Exception as e:
-        app.logger.error(f"Error fetching learning goals: {str(e)}")
+        app.logger.error(f"error beim Abrufen von Lernzielen: {str(e)}")
         return jsonify({'error': 'Internal Server Error', 'details': str(e)}), 500
 
 @app.route('/learning_goals', methods=['POST'])
