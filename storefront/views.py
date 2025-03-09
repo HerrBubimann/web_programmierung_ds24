@@ -210,4 +210,4 @@ if __name__ == '__main__':
         if not os.path.exists(Config.INSTANCE_DIR):
             os.makedirs(Config.INSTANCE_DIR)
         db.create_all()
-    app.run(debug=True, port=5001)
+    app.run(debug=True)
