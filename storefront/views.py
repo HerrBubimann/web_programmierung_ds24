@@ -3,6 +3,9 @@ from flask_login import LoginManager, login_user, logout_user
 from datenbank.models import db, User, Token, Topic, LearningGoal
 from config import Config
 from bff.TokenManager import token_manager
+from datetime import datetime
+from sqlalchemy import or_
+import os
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -43,8 +46,11 @@ def login():
         username_or_email = data.get('username') or data.get('email')
         password = data.get('password')
 
+        print(username_or_email, password)
+
         user = User.query.filter(
-            (User.username == username_or_email) | (User.usermail == username_or_email) & (User.is_active == True)
+            or_(User.username == username_or_email, User.usermail == username_or_email),
+            User.is_active_user == True
         ).first()
 
         if user and user.check_password(password):
@@ -173,17 +179,35 @@ def delete_topic(topic_id):
     db.session.commit()
     return jsonify({'message': 'Thema erfolgreich gelöscht'}), 200
 
+
 @app.route('/learning_goals', methods=['GET'])
-def get_learning_goal():
+def get_learning_goals():
     token = request.cookies.get('auth_token')
     user = validate_token(token)
-    goals = LearningGoal.query.filter_by(user_id=user.id).all()
-    if goals:
-        goals_dict = [goal.to_dict() for goal in goals]
-        return jsonify(goals_dict), 200
-    else:
-        return jsonify({'error': 'Keine Lernziel vorhanden'}), 205
-    return jsonify({'error': 'Lernziel nicht gefunden'}), 404
+    if not user:
+        return jsonify({'error': 'Unauthorized'}), 401
+
+    try:
+        goals = LearningGoal.query.join(Topic).filter_by(user_id=user.id).order_by(LearningGoal.deadline).all()
+        goals_data = []
+
+        for goal in goals:
+            deadline = goal.deadline
+            if isinstance(deadline, str):
+                try:
+                    deadline = datetime.fromisoformat(deadline)
+                except ValueError:
+                    deadline = None
+            goals_data.append({
+                'id': goal.id,
+                'topic_name': goal.topic.name if goal.topic else None,
+                'description': goal.description,
+                'deadline': deadline.strftime('%Y-%m-%d') if deadline else None
+            })
+        return jsonify(goals_data), 200
+    except Exception as e:
+        app.logger.error(f"Error fetching learning goals: {str(e)}")
+        return jsonify({'error': 'Internal Server Error', 'details': str(e)}), 500
 
 @app.route('/learning_goals', methods=['POST'])
 def create_learning_goal():
@@ -197,14 +221,19 @@ def create_learning_goal():
     description = data.get('description')
     deadline = data.get('deadline')
 
-    if not topic_id:
-        return jsonify({'error': 'topic_id und goal sind erforderlich'}), 400
+    if not topic_id or not description or not deadline:
+        return jsonify({'error': 'topic_id, description und deadline sind erforderlich'}), 400
 
-    topic = Topic.query.filter_by(topic_id=topic_id,description=description,deadline=deadline, user_id=user.id).first()
+    topic = Topic.query.filter_by(id=topic_id, user_id=user.id).first()
     if not topic:
         return jsonify({'error': 'Thema nicht gefunden'}), 404
 
-    new_learning_goal = LearningGoal(topic_id=topic_id,description=description,deadline=deadline, user_id=user.id)
+    new_learning_goal = LearningGoal(
+        topic_id=topic_id,
+        description=description,
+        deadline=deadline,
+        user_id=user.id
+    )
     db.session.add(new_learning_goal)
     db.session.commit()
 
@@ -249,5 +278,7 @@ def delete_learning_goal(goal_id):
 
 if __name__ == '__main__':
     with app.app_context():
+        if not os.path.exists(Config.INSTANCE_DIR):
+            os.makedirs(Config.INSTANCE_DIR)
         db.create_all()
     app.run(debug=True, port=5001)

@@ -1,4 +1,4 @@
-/* Allgemeine Body-Stile */
+/* Allgemeine Stile */
 body {
     background-color: #F3EBF6;
     font-family: 'Ubuntu', sans-serif;
@@ -6,25 +6,35 @@ body {
     padding: 0;
 }
 
-/* Hauptbereich */
 h1, h2 {
     text-align: center;
     color: #8C55AA;
     font-family: 'Ubuntu', sans-serif;
 }
 
-ul {
-    list-style-type: none;
-    padding-left: 0;
-    margin-top: 0;
+.container {
+    width: 80%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding-top: 20px;
 }
 
-li {
+/* Box-Stil für Themen und Lernziele */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
     background-color: #fff;
+    padding: 15px;
     margin: 10px 0;
-    padding: 10px;
     border-radius: 10px;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
 }
 
 /* Formulare */
@@ -32,8 +42,6 @@ form {
     background-color: #fff;
     padding: 20px;
     margin: 20px auto;
-    width: 80%;
-    max-width: 600px;
     border-radius: 10px;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
 }
@@ -56,7 +64,7 @@ form input, form select, form button {
     box-sizing: border-box;
 }
 
-form input[type="text"], form input[type="number"], form input[type="date"], form select {
+form input[type="text"], form input[type="date"], form select {
     background-color: #f9f9f9;
 }
 
@@ -79,33 +87,32 @@ input:focus, select:focus, button:focus {
     outline: none;
 }
 
-/* Stil für Links */
-a {
+/* Logout-Button */
+.logout-button {
+    position: absolute;
+    top: 10px;
+    right: 20px;
     color: #8C55AA;
-    text-decoration: none;
     font-size: 14px;
+    text-decoration: none;
 }
 
-a:hover {
+.logout-button:hover {
     text-decoration: underline;
 }
 
-/* Media Queries für kleinere Bildschirmgrößen */
+
+/* Mobile Optimierung */
 @media (max-width: 600px) {
-    form {
+    .container {
         width: 90%;
-        padding: 15px;
     }
 
-    ul {
-        padding-left: 20px;
+    form {
+        width: 100%;
     }
 
-    li {
+    ul li {
         font-size: 14px;
-    }
-
-    h1, h2 {
-        font-size: 20px;
     }
 }

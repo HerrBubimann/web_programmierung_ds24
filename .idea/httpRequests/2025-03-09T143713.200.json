@@ -1,4 +1,4 @@
 {
   "message": "Login successful",
-  "user": null
+  "redirect": "/"
 }

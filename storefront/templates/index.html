@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Learning App</title>
     <link rel="stylesheet" type="text/css" href="../static/styles.css">
     <link rel="stylesheet" type="text/css" href="../static/index.css">
@@ -11,43 +12,51 @@
 
     <div class="container">
         <h1>Meine Lernziele</h1>
-        <h2>Themen</h2>
-        <ul id="topics-list">
-        </ul>
-        <h2>Lernziele</h2>
-        <ul id="goals-list">
-        </ul>
 
-        <h2>Neues Thema hinzufügen</h2>
-        <form id="create-topic-form">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-            <br>
-            <label for="priority">Priorität:</label>
-            <select id="priority" name="priority">
-                <option value="high">Hoch</option>
-                <option value="medium" selected>Mittel</option>
-                <option value="low">Niedrig</option>
-            </select>
-            <br>
-            <button type="submit">Thema hinzufügen</button>
-        </form>
+        <div class="section">
+            <h2>Themen</h2>
+            <ul id="topics-list"></ul>
+        </div>
 
-        <h2>Neues Lernziel hinzufügen</h2>
-        <form id="create-goal-form">
-            <label for="topic_id">Thema:</label>
-            <select id="topic_id" name="topic_id" required>
-                <option value="" disabled selected>Thema auswählen...</option>
-            </select>
-            <br>
-            <label for="description">Beschreibung:</label>
-            <input type="text" id="description" name="description" required>
-            <br>
-            <label for="deadline">Deadline:</label>
-            <input type="date" id="deadline" name="deadline" required>
-            <br>
-            <button type="submit">Lernziel hinzufügen</button>
-        </form>
+        <div class="section">
+            <h2>Lernziele</h2>
+            <ul id="goals-list"></ul>
+        </div>
+
+        <div class="section">
+            <h2>Neues Thema hinzufügen</h2>
+            <form id="create-topic-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="priority">Priorität:</label>
+                <select id="priority" name="priority">
+                    <option value="hoch">Hoch</option>
+                    <option value="mittel" selected>Mittel</option>
+                    <option value="niedrig">Niedrig</option>
+                </select>
+
+                <button type="submit" class="btn">Thema hinzufügen</button>
+            </form>
+        </div>
+
+        <div class="section">
+            <h2>Neues Lernziel hinzufügen</h2>
+            <form id="create-goal-form">
+                <label for="topic_id">Thema:</label>
+                <select id="topic_id" name="topic_id" required>
+                    <option value="" disabled selected>Thema auswählen...</option>
+                </select>
+
+                <label for="description">Beschreibung:</label>
+                <input type="text" id="description" name="description" required>
+
+                <label for="deadline">Deadline:</label>
+                <input type="date" id="deadline" name="deadline" required>
+
+                <button type="submit" class="btn">Lernziel hinzufügen</button>
+            </form>
+        </div>
     </div>
 
     <script>
@@ -79,13 +88,19 @@
         async function loadGoals() {
             try {
                 const response = await fetch('/learning_goals');
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error('Server-Fehler:', errorData.error);
+                    return;
+                }
+
                 const data = await response.json();
                 const goalsList = document.getElementById('goals-list');
                 goalsList.innerHTML = '';
 
                 data.forEach(goal => {
                     const listItem = document.createElement('li');
-                    listItem.textContent = `${goal.description} (Deadline: ${goal.deadline})`;
+                    listItem.textContent = `${goal.topic_name} ${goal.description} (Deadline: ${goal.deadline})`;
                     goalsList.appendChild(listItem);
                 });
             } catch (error) {
@@ -101,7 +116,7 @@
         document.getElementById('create-topic-form').addEventListener('submit', async function(event) {
             event.preventDefault();
             const formData = {
-                name: document.getElementById('name').value,
+                title: document.getElementById('name').value,
                 priority: document.getElementById('priority').value
             };
 
@@ -114,18 +129,21 @@
                     body: JSON.stringify(formData),
                 });
 
-                const data = await response.json();
-                console.log('Success:', data);
+                if (!response.ok) {
+                    throw new Error('Fehler beim Erstellen des Themas.');
+                }
+
+                await response.json();
                 loadTopics();
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Fehler:', error);
             }
         });
 
         document.getElementById('create-goal-form').addEventListener('submit', async function(event) {
             event.preventDefault();
             const formData = {
-                topic_id: parseInt(document.getElementById('topic_id').value),
+                topic_id: document.getElementById('topic_id').value,
                 description: document.getElementById('description').value,
                 deadline: document.getElementById('deadline').value
             };
@@ -139,11 +157,14 @@
                     body: JSON.stringify(formData),
                 });
 
-                const data = await response.json();
-                console.log('Success:', data);
+                if (!response.ok) {
+                    throw new Error('Fehler beim Erstellen des Lernziels.');
+                }
+
+                await response.json();
                 loadGoals();
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Fehler:', error);
             }
         });
     </script>

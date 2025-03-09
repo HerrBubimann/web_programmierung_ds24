@@ -35,6 +35,7 @@ class Topic(db.Model):
     name = db.Column(db.String(100), nullable=False)
     priority = db.Column(db.String(10), default='medium')
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    learning_goals = db.relationship('LearningGoal', back_populates='topic')
 
     def to_dict(self):
         return {
@@ -50,6 +51,7 @@ class LearningGoal(db.Model):
     description = db.Column(db.String(200), nullable=False)
     deadline = db.Column(db.String(20), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    topic = db.relationship('Topic', back_populates='learning_goals')
 
     def to_dict(self):
         return {
