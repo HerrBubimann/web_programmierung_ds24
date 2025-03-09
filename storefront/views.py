@@ -112,16 +112,19 @@ def register():
 
     return render_template('register.html')
 
+
 @app.route('/topics', methods=['GET'])
 def get_topic():
     token = request.cookies.get('auth_token')
     user = validate_token(token)
     topics = Topic.query.filter_by(user_id=user.id).all()
+
     if topics:
         topics_dict = [topic.to_dict() for topic in topics]
         return jsonify(topics_dict), 200
     else:
-        return jsonify({'error': 'Thema nicht gefunden'}), 404
+        return jsonify([]), 200
+
 
 @app.route('/topics', methods=['POST'])
 def create_topic():

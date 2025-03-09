@@ -64,11 +64,16 @@
             try {
                 const response = await fetch('/topics');
                 const data = await response.json();
+
                 const topicsList = document.getElementById('topics-list');
                 topicsList.innerHTML = '';
 
                 const topicDropdown = document.getElementById('topic_id');
                 topicDropdown.innerHTML = '<option value="" disabled selected>Thema auswählen...</option>';
+
+                if (!Array.isArray(data) || data.length === 0) {
+                    return;
+                }
 
                 data.forEach(topic => {
                     const listItem = document.createElement('li');
