@@ -29,6 +29,7 @@ def validate_token(token):
     if not token_manager.is_token_valid(token):
         return None
     return User.query.get(token_instance.user_id)
+
 @app.route('/')
 def index():
     token = request.cookies.get('auth_token')
