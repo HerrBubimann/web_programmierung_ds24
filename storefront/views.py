@@ -16,9 +16,12 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
+    """Lädt den Benutzer anhand der user_id aus der Datenbank."""
     return User.query.get(int(user_id))
 
 def validate_token(token):
+    """Überprüft, ob das Token gültig ist und gibt den zugehörigen Benutzer zurück.
+        (hier als funktion drin weil ich den sinn dafür nicht gesehen habe dafür eine klasse zu erstellen)"""
     if not token:
         return None
 
@@ -32,6 +35,7 @@ def validate_token(token):
 
 @app.route('/')
 def index():
+    """Zeigt die Startseite an, wenn der Benutzer authentifiziert ist, sonst Weiterleitung zum Login."""
     token = request.cookies.get('auth_token')
     user = validate_token(token)
     if user:
@@ -42,6 +46,7 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """Behandelt den Login-Prozess. Bei erfolgreicher Anmeldung wird ein Token erstellt und gesetzt."""
     if request.method == 'POST':
         data = request.get_json()
         username_or_email = data.get('username') or data.get('email')
@@ -67,6 +72,7 @@ def login():
 
 @app.route('/logout', methods=['POST'])
 def logout():
+    """Behandelt den Logout-Prozess. Löscht das Token und meldet den Benutzer ab."""
     token = request.cookies.get('auth_token')
     user = validate_token(token)
     if not user:
@@ -82,6 +88,7 @@ def logout():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    """Behandelt die Registrierung eines neuen Benutzers."""
     if request.method == 'POST':
         try:
             data = request.get_json()
@@ -113,9 +120,9 @@ def register():
 
     return render_template('register.html')
 
-
 @app.route('/topics', methods=['GET'])
 def get_topic():
+    """Gibt alle Themen des authentifizierten Benutzers zurück."""
     token = request.cookies.get('auth_token')
     user = validate_token(token)
     topics = Topic.query.filter_by(user_id=user.id).all()
@@ -126,9 +133,9 @@ def get_topic():
     else:
         return jsonify([]), 200
 
-
 @app.route('/topics', methods=['POST'])
 def create_topic():
+    """Erstellt ein neues Thema für den authentifizierten Benutzer."""
     token = request.cookies.get('auth_token')
     user = validate_token(token)
     if not user:
@@ -149,6 +156,7 @@ def create_topic():
 
 @app.route('/learning_goals', methods=['GET'])
 def get_learning_goals():
+    """Gibt alle Lernziele des authentifizierten Benutzers zurück, sortiert nach Frist."""
     token = request.cookies.get('auth_token')
     user = validate_token(token)
     if not user:
@@ -178,6 +186,7 @@ def get_learning_goals():
 
 @app.route('/learning_goals', methods=['POST'])
 def create_learning_goal():
+    """Erstellt ein neues Lernziel für den authentifizierten Benutzer."""
     token = request.cookies.get('auth_token')
     user = validate_token(token)
     if not user:
