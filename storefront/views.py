@@ -215,9 +215,12 @@ def create_learning_goal():
 
     return jsonify({'message': 'Lernziel erfolgreich erstellt', 'learning_goal_id': new_learning_goal.id}), 201
 
-if __name__ == '__main__':
+def main():
     with app.app_context():
         if not os.path.exists(Config.INSTANCE_DIR):
             os.makedirs(Config.INSTANCE_DIR)
         db.create_all()
     app.run(debug=True, port=5001)
+
+if __name__ == '__main__':
+    main()
