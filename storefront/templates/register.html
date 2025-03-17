@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>Register</title>
-    <link rel="stylesheet" type="text/css" href="../static/styles.css">
     <link rel="stylesheet" type="text/css" href="../static/register.css">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,7 +34,7 @@
             }
 
             try {
-                const response = await fetch('http://127.0.0.1:5001/register', {
+                const response = await fetch('/register', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
