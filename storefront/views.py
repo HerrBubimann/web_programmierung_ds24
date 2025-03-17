@@ -20,8 +20,8 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 def validate_token(token):
-    """Überprüft, ob das Token gültig ist und gibt den zugehörigen Benutzer zurück.
-        (hier als funktion drin weil ich den sinn dafür nicht gesehen habe dafür eine klasse zu erstellen)"""
+    """Prüft die Gültigkeit des Tokens und gibt den entsprechenden Benutzer zurück.
+        (Direkt als Funktion implementiert, da der Nutzen einer eigenen Klasse hierfür nicht ersichtlich war.)"""
     if not token:
         return None
 
