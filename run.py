@@ -1,4 +1,4 @@
-from storefront.views import main
+from bff.views import main
 
 if __name__ == '__main__':
     main()
