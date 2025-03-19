@@ -7,7 +7,11 @@ from datetime import datetime
 from sqlalchemy import or_
 import os
 
-app = Flask(__name__, template_folder=r'C:\Users\janje\PycharmProjects\web_programmierung_ds24\storefront\templates', static_folder=r'C:\Users\janje\PycharmProjects\web_programmierung_ds24\storefront\static')
+app = Flask(__name__,
+            #template_folder=r'C:\Users\janje\PycharmProjects\web_programmierung_ds24\storefront\templates',
+            template_folder=r'C:\Users\JJ\Uni\web_programmierung_ds24\storefront\templates',
+            #static_folder=r'C:\Users\janje\PycharmProjects\web_programmierung_ds24\storefront\static'
+            static_folder=r'C:\Users\JJ\Uni\web_programmierung_ds24\storefront\static',)
 app.config.from_object(Config)
 db.init_app(app)
 
