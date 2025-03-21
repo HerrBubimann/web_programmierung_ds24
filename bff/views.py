@@ -8,10 +8,10 @@ from sqlalchemy import or_
 import os
 
 app = Flask(__name__,
-            #template_folder=r'C:\Users\janje\PycharmProjects\web_programmierung_ds24\storefront\templates',
-            template_folder=r'C:\Users\JJ\Uni\web_programmierung_ds24\storefront\templates',
-            #static_folder=r'C:\Users\janje\PycharmProjects\web_programmierung_ds24\storefront\static'
-            static_folder=r'C:\Users\JJ\Uni\web_programmierung_ds24\storefront\static',)
+            template_folder=r'C:\Users\janje\PycharmProjects\web_programmierung_ds24\storefront\templates',
+            #template_folder=r'C:\Users\JJ\Uni\web_programmierung_ds24\storefront\templates',
+            static_folder=r'C:\Users\janje\PycharmProjects\web_programmierung_ds24\storefront\static')
+            #static_folder=r'C:\Users\JJ\Uni\web_programmierung_ds24\storefront\static',)
 app.config.from_object(Config)
 db.init_app(app)
 
@@ -55,8 +55,6 @@ def login():
         data = request.get_json()
         username_or_email = data.get('username') or data.get('email')
         password = data.get('password')
-
-        print(username_or_email, password)
 
         user = User.query.filter(
             or_(User.username == username_or_email, User.usermail == username_or_email),
