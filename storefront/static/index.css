@@ -134,3 +134,25 @@ input:focus, select:focus, button:focus {
         font-size: 12px;
     }
 }
+
+.nav-button {
+    position: fixed;
+    top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: background 0.3s;
+    color: white;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+#logout-button {
+    right: 20px;
+    background: #9C27B0;
+}
+
+#logout-button:hover {
+    background: #E040FB;
+}

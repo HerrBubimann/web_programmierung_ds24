@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="../static/index.css">
 </head>
 <body>
-    <a href="/login" class="logout-button">Logout</a>
+<button class="nav-button" id="logout-button" onclick="logout()">Abmelden</button>
 
     <div class="container">
         <h1>Meine Lernziele</h1>
@@ -105,6 +105,12 @@
                 data.forEach(goal => {
                     const listItem = document.createElement('li');
                     listItem.textContent = `${goal.topic_name} ${goal.description} (Deadline: ${goal.deadline})`;
+
+                    listItem.style.cursor = 'pointer';
+                    listItem.addEventListener('click', () => {
+                        window.location.href = `/learning_goals/${goal.id}`;
+                    });
+
                     goalsList.appendChild(listItem);
                 });
             } catch (error) {
@@ -143,6 +149,24 @@
                 console.error('Fehler:', error);
             }
         });
+
+        async function logout() {
+            try {
+                const response = await fetch('/logout', {
+                    method: 'POST',
+                    credentials: 'same-origin'
+                });
+
+                if (response.ok) {
+                    document.cookie = 'auth_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                    window.location.href = '/login';
+                } else {
+                    alert('Abmeldung fehlgeschlagen');
+                }
+            } catch (error) {
+                alert('Verbindungsfehler');
+            }
+        }
 
         document.getElementById('create-goal-form').addEventListener('submit', async function(event) {
             event.preventDefault();

@@ -1,11 +1,12 @@
 from flask import Flask, render_template, redirect, url_for, request, flash, jsonify, make_response
 from flask_login import LoginManager, login_user, logout_user
-from datenbank.models import db, User, Token, Topic, LearningGoal
+from datenbank.models import db, User, Token, Topic, LearningGoal, StudyMethod
 from config import Config
 from bff.TokenManager import token_manager
 from datetime import datetime
 from sqlalchemy import or_
 import os
+from googleapiclient.discovery import build
 
 app = Flask(__name__,
             template_folder=r'C:\Users\janje\PycharmProjects\web_programmierung_ds24\storefront\templates',
@@ -14,6 +15,8 @@ app = Flask(__name__,
             #static_folder=r'C:\Users\JJ\Uni\web_programmierung_ds24\storefront\static',)
 app.config.from_object(Config)
 db.init_app(app)
+
+youtube = build('youtube', 'v3', developerKey='AIzaSyAxK2w1CW7w76e-nmvd459gpI9votx81vc')
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -216,6 +219,107 @@ def create_learning_goal():
     db.session.commit()
 
     return jsonify({'message': 'Lernziel erfolgreich erstellt', 'learning_goal_id': new_learning_goal.id}), 201
+
+@app.route('/learning_goals/<int:goal_id>')
+def learning_goal_detail(goal_id):
+    """
+    Gibt die Details eines bestimmten Lernziels zurück.
+    """
+    token = request.cookies.get('auth_token')
+    user = validate_token(token)
+    if not user:
+        return redirect(url_for('login'))
+
+    goal = LearningGoal.query.filter_by(id=goal_id, user_id=user.id).first()
+    if not goal:
+        return jsonify({'error': 'Lernziel nicht gefunden'}), 404
+
+    return render_template('goal_detail.html', goal=goal)
+
+
+@app.route('/study_methods', methods=['POST'])
+def create_study_method():
+    """
+    Erstellt eine neue Lernmethode für ein bestimmtes Lernziel.
+    """
+    token = request.cookies.get('auth_token')
+    user = validate_token(token)
+    if not user:
+        return jsonify({'error': 'Unauthorized'}), 401
+
+    data = request.get_json()
+    goal_id = data.get('goal_id')
+    method_type = data.get('type')
+    content = data.get('content')
+
+    goal = LearningGoal.query.filter_by(id=goal_id, user_id=user.id).first()
+    if not goal:
+        return jsonify({'error': 'Lernziel nicht gefunden'}), 404
+
+    new_method = StudyMethod(
+        method_type=method_type,
+        content=content,
+        goal_id=goal_id
+    )
+    db.session.add(new_method)
+    db.session.commit()
+
+    return jsonify({'message': 'Methode gespeichert', 'method': new_method.to_dict()}), 201
+
+
+@app.route('/study_methods/<int:goal_id>', methods=['GET'])
+def get_study_methods(goal_id):
+    """
+    Gibt alle Lernmethoden für ein bestimmtes Lernziel des Benutzers zurück.
+    """
+    token = request.cookies.get('auth_token')
+    user = validate_token(token)
+    if not user:
+        return jsonify({'error': 'Unauthorized'}), 401
+
+    methods = StudyMethod.query.join(LearningGoal).filter(
+        StudyMethod.goal_id == goal_id,
+        LearningGoal.user_id == user.id
+    ).all()
+
+    return jsonify([method.to_dict() for method in methods]), 200
+
+
+@app.route('/study_methods/<int:goal_id>/<string:content>', methods=['DELETE'])
+def delete_study_method(goal_id, content):
+    """Löscht eine Lernmethode anhand der YouTube-ID/content"""
+    token = request.cookies.get('auth_token')
+    user = validate_token(token)
+    if not user:
+        return jsonify({'error': 'Unauthorized'}), 401
+
+    method = StudyMethod.query.join(LearningGoal).filter(
+        StudyMethod.content == content,
+        StudyMethod.goal_id == goal_id,
+        LearningGoal.user_id == user.id
+    ).first()
+
+    if not method:
+        return jsonify({'error': 'Methode nicht gefunden'}), 404
+
+    db.session.delete(method)
+    db.session.commit()
+
+    return jsonify({'message': 'Methode erfolgreich gelöscht'}), 200
+
+@app.route('/youtube-search')
+def youtube_search():
+    search_query = request.args.get('q', '')
+    youtube_request = youtube.search().list(  # Name geändert
+        q=search_query,
+        part='snippet',
+        type='video',
+        maxResults=5,
+        videoEmbeddable='true'
+    )
+    response = youtube_request.execute()
+    return jsonify(response['items'])
+
 
 def main():
     with app.app_context():

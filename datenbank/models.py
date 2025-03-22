@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -67,3 +68,18 @@ class Token(db.Model):
     token = db.Column(db.String(100), nullable=False)
     token_erstelldatum = db.Column(db.DateTime, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+class StudyMethod(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    method_type = db.Column(db.String(50), nullable=False)  # 'cards', 'mindmap', 'summary', 'video'
+    content = db.Column(db.Text, nullable=False)
+    goal_id = db.Column(db.Integer, db.ForeignKey('learning_goal.id'), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'type': self.method_type,
+            'content': self.content,
+            'created_at': self.created_at.isoformat()
+        }

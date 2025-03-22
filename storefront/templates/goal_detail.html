@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lernziel Details</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/index.css">
+    <link rel="stylesheet" href="../static/lernziel.css">
+</head>
+<body>
+    <button class="nav-button" id="back-button" onclick="goBack()">← Zurück</button>
+    <button class="nav-button" id="logout-button" onclick="logout()">Abmelden</button>
+
+    <div class="container">
+        <h1>{{ goal.description }}</h1>
+        <div class="method-grid">
+            <div class="method-section">
+                <h2>Karteikarten</h2>
+                <form onsubmit="return handleFormSubmit(event, 'cards')">
+                    <textarea placeholder="Frage und Antwort..." required></textarea>
+                    <button type="submit">Speichern</button>
+                </form>
+                <div id="cards-list" class="method-list"></div>
+            </div>
+
+            <div class="method-section">
+                <h2>YouTube Videos</h2>
+                <div class="search-box">
+                    <input type="text" id="search-query" placeholder="Video suchen..." oninput="searchVideos()">
+                    <button type="button" onclick="searchVideos()">Suchen</button>
+                    <div id="search-results"></div>
+                </div>
+                <form onsubmit="return handleFormSubmit(event, 'video')">
+                    <input type="text" placeholder="YouTube URL oder ID" required>
+                    <button type="submit">Manuell hinzufügen</button>
+                </form>
+                <div id="video-list" class="video-list"></div>
+            </div>
+
+            <div class="method-section">
+                <h2>Mindmap</h2>
+                <form onsubmit="return handleFormSubmit(event, 'mindmap')">
+                    <textarea placeholder="Zentrale Idee..." required></textarea>
+                    <button type="submit">Speichern</button>
+                </form>
+                <div id="mindmap-list" class="method-list"></div>
+            </div>
+
+            <div class="method-section">
+                <h2>Zusammenfassung</h2>
+                <form onsubmit="return handleFormSubmit(event, 'summary')">
+                    <textarea placeholder="Zusammenfassung..." required></textarea>
+                    <button type="submit">Speichern</button>
+                </form>
+                <div id="summary-list" class="method-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.location.href = '/';
+        }
+
+        async function logout() {
+            try {
+                const response = await fetch('/logout', {
+                    method: 'POST',
+                    credentials: 'same-origin'
+                });
+
+                if (response.ok) {
+                    document.cookie = 'auth_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                    window.location.href = '/login';
+                } else {
+                    alert('Abmeldung fehlgeschlagen');
+                }
+            } catch (error) {
+                alert('Verbindungsfehler');
+            }
+        }
+
+        const GOAL_ID = "{{ goal.id }}";
+
+        function extractYouTubeID(url) {
+            const regex = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu.be\/)([\w-]{11})/;
+            const match = url.match(regex);
+            return match ? match[1] : url.length === 11 ? url : null;
+        }
+
+        async function handleFormSubmit(event, type) {
+            event.preventDefault();
+            const input = event.target.querySelector('input, textarea');
+            let content = input.value.trim();
+
+            try {
+                if (type === 'video') {
+                    content = extractYouTubeID(content);
+                    if (!content || content.length !== 11) {
+                        throw new Error('Ungültige YouTube-URL/ID');
+                    }
+                }
+
+                const response = await fetch('/study_methods', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        goal_id: GOAL_ID,
+                        type,
+                        content
+                    })
+                });
+
+                if (!response.ok) throw new Error('Speichern fehlgeschlagen');
+
+                const container = document.getElementById(`${type}-list`);
+                if (type === 'video') {
+                    container.insertAdjacentHTML('beforeend', `
+                        <div class="video-item" data-video-id="${content}">
+                            <iframe src="https://www.youtube.com/embed/${content}" allowfullscreen></iframe>
+                            <button class="delete-video" onclick="deleteVideo('${content}')">×</button>
+                        </div>
+                    `);
+                } else {
+                    container.insertAdjacentHTML('beforeend', `
+                        <div class="method-item">${content}</div>
+                    `);
+                }
+
+                input.value = '';
+            } catch (error) {
+                alert(`Fehler: ${error.message}`);
+            }
+        }
+
+        async function deleteVideo(videoId) {
+            if (!confirm('Video wirklich löschen?')) return;
+
+            try {
+                const response = await fetch(`/study_methods/${GOAL_ID}/${videoId}`, {
+                    method: 'DELETE'
+                });
+
+                if (!response.ok) throw new Error('Löschen fehlgeschlagen');
+                document.querySelector(`[data-video-id="${videoId}"]`).remove();
+            } catch (error) {
+                alert(`Fehler: ${error.message}`);
+            }
+        }
+
+        async function searchVideos() {
+            const query = document.getElementById('search-query').value.trim();
+            const results = document.getElementById('search-results');
+
+            if (!query) {
+                results.style.display = 'none';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/youtube-search?q=${encodeURIComponent(query)}`);
+                const videos = await response.json();
+
+                results.innerHTML = videos.map(video => `
+                    <div class="search-result" onclick="addVideo('${video.id.videoId}')">
+                        <img src="${video.snippet.thumbnails.medium.url}">
+                        <div>
+                            <h4>${video.snippet.title}</h4>
+                            <p>${video.snippet.channelTitle}</p>
+                        </div>
+                    </div>
+                `).join('');
+
+                results.style.display = 'block';
+            } catch (error) {
+                alert('Video-Suche fehlgeschlagen');
+            }
+        }
+
+        async function addVideo(videoId) {
+            try {
+                await fetch('/study_methods', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        goal_id: GOAL_ID,
+                        type: 'video',
+                        content: videoId
+                    })
+                });
+
+                document.getElementById('video-list').insertAdjacentHTML('beforeend', `
+                    <div class="video-item" data-video-id="${videoId}">
+                        <iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>
+                        <button class="delete-video" onclick="deleteVideo('${videoId}')">×</button>
+                    </div>
+                `);
+
+                document.getElementById('search-results').style.display = 'none';
+            } catch (error) {
+                alert(`Fehler: ${error.message}`);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch(`/study_methods/${GOAL_ID}`);
+                const methods = await response.json();
+
+                methods.forEach(method => {
+                    const container = document.getElementById(`${method.type}-list`);
+                    if (method.type === 'video') {
+                        container.insertAdjacentHTML('beforeend', `
+                            <div class="video-item" data-video-id="${method.content}">
+                                <iframe src="https://www.youtube.com/embed/${method.content}" allowfullscreen></iframe>
+                                <button class="delete-video" onclick="deleteVideo('${method.content}')">×</button>
+                            </div>
+                        `);
+                    } else {
+                        container.insertAdjacentHTML('beforeend', `
+                            <div class="method-item">${method.content}</div>
+                        `);
+                    }
+                });
+            } catch (error) {
+                alert('Fehler beim Laden der Daten');
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-box')) {
+                document.getElementById('search-results').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
