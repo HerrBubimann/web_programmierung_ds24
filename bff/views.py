@@ -320,7 +320,6 @@ def youtube_search():
     response = youtube_request.execute()
     return jsonify(response['items'])
 
-
 def main():
     with app.app_context():
         if not os.path.exists(Config.INSTANCE_DIR):
