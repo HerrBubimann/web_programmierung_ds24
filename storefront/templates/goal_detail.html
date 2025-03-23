@@ -26,7 +26,7 @@
             <div class="method-section">
                 <h2>YouTube Videos</h2>
                 <div class="search-box">
-                    <input type="text" id="search-query" placeholder="Video suchen..." oninput="searchVideos()">
+                    <input type="text" id="search-query" placeholder="Video suchen...">
                     <button type="button" onclick="searchVideos()">Suchen</button>
                     <div id="search-results"></div>
                 </div>
@@ -58,8 +58,33 @@
     </div>
 
     <script>
+        function debounce(func, timeout = 500) {
+            let timer
+            return (...args) => {
+                clearTimeout(timer)
+                timer = setTimeout(() => { func.apply(this, args) }, timeout)
+            }
+        }
+
+        function extractYouTubeID(url) {
+            const regex = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu.be\/)([\w-]{11})/
+            const match = url.match(regex)
+            return match ? match[1] : url.length === 11 ? url : null
+        }
+
+        const GOAL_ID = "{{ goal.id }}"
+        let abortController = null
+
+        document.getElementById('search-query').addEventListener('input', debounce(searchVideos))
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-box')) {
+                document.getElementById('search-results').style.display = 'none'
+            }
+        })
+
         function goBack() {
-            window.location.href = '/';
+            window.location.href = '/'
         }
 
         async function logout() {
@@ -67,37 +92,29 @@
                 const response = await fetch('/logout', {
                     method: 'POST',
                     credentials: 'same-origin'
-                });
+                })
 
                 if (response.ok) {
-                    document.cookie = 'auth_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-                    window.location.href = '/login';
+                    document.cookie = 'auth_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+                    window.location.href = '/login'
                 } else {
-                    alert('Abmeldung fehlgeschlagen');
+                    alert('Abmeldung fehlgeschlagen')
                 }
             } catch (error) {
-                alert('Verbindungsfehler');
+                alert('Verbindungsfehler')
             }
         }
 
-        const GOAL_ID = "{{ goal.id }}";
-
-        function extractYouTubeID(url) {
-            const regex = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu.be\/)([\w-]{11})/;
-            const match = url.match(regex);
-            return match ? match[1] : url.length === 11 ? url : null;
-        }
-
         async function handleFormSubmit(event, type) {
-            event.preventDefault();
-            const input = event.target.querySelector('input, textarea');
-            let content = input.value.trim();
+            event.preventDefault()
+            const input = event.target.querySelector('input, textarea')
+            let content = input.value.trim()
 
             try {
                 if (type === 'video') {
-                    content = extractYouTubeID(content);
+                    content = extractYouTubeID(content)
                     if (!content || content.length !== 11) {
-                        throw new Error('Ungültige YouTube-URL/ID');
+                        throw new Error('Ungültige YouTube-URL/ID')
                     }
                 }
 
@@ -109,71 +126,72 @@
                         type,
                         content
                     })
-                });
+                })
 
-                if (!response.ok) throw new Error('Speichern fehlgeschlagen');
+                if (!response.ok) throw new Error('Speichern fehlgeschlagen')
 
-                const container = document.getElementById(`${type}-list`);
+                const container = document.getElementById(`${type}-list`)
                 if (type === 'video') {
                     container.insertAdjacentHTML('beforeend', `
                         <div class="video-item" data-video-id="${content}">
                             <iframe src="https://www.youtube.com/embed/${content}" allowfullscreen></iframe>
                             <button class="delete-video" onclick="deleteVideo('${content}')">×</button>
                         </div>
-                    `);
+                    `)
                 } else {
                     container.insertAdjacentHTML('beforeend', `
                         <div class="method-item">${content}</div>
-                    `);
+                    `)
                 }
 
-                input.value = '';
+                input.value = ''
             } catch (error) {
-                alert(`Fehler: ${error.message}`);
-            }
-        }
-
-        async function deleteVideo(videoId) {
-            if (!confirm('Video wirklich löschen?')) return;
-
-            try {
-                const response = await fetch(`/study_methods/${GOAL_ID}/${videoId}`, {
-                    method: 'DELETE'
-                });
-
-                if (!response.ok) throw new Error('Löschen fehlgeschlagen');
-                document.querySelector(`[data-video-id="${videoId}"]`).remove();
-            } catch (error) {
-                alert(`Fehler: ${error.message}`);
+                alert(`Fehler: ${error.message}`)
             }
         }
 
         async function searchVideos() {
-            const query = document.getElementById('search-query').value.trim();
-            const results = document.getElementById('search-results');
+            const query = document.getElementById('search-query').value.trim()
+            const results = document.getElementById('search-results')
 
             if (!query) {
-                results.style.display = 'none';
-                return;
+                results.style.display = 'none'
+                results.innerHTML = ''
+                return
             }
 
             try {
-                const response = await fetch(`/youtube-search?q=${encodeURIComponent(query)}`);
-                const videos = await response.json();
+                if (abortController) {
+                    abortController.abort()
+                }
+                abortController = new AbortController()
 
-                results.innerHTML = videos.map(video => `
-                    <div class="search-result" onclick="addVideo('${video.id.videoId}')">
-                        <img src="${video.snippet.thumbnails.medium.url}">
-                        <div>
-                            <h4>${video.snippet.title}</h4>
-                            <p>${video.snippet.channelTitle}</p>
+                const response = await fetch(`/youtube-search?q=${encodeURIComponent(query)}`, {
+                    signal: abortController.signal
+                })
+
+                if (!response.ok) throw new Error('Suche fehlgeschlagen')
+
+                const videos = await response.json()
+
+                if (query === document.getElementById('search-query').value.trim()) {
+                    results.innerHTML = videos.map(video => `
+                        <div class="search-result" onclick="addVideo('${video.id.videoId}')">
+                            <img src="${video.snippet.thumbnails.medium.url}">
+                            <div>
+                                <h4>${video.snippet.title}</h4>
+                                <p>${video.snippet.channelTitle}</p>
+                            </div>
                         </div>
-                    </div>
-                `).join('');
+                    `).join('')
 
-                results.style.display = 'block';
+                    results.style.display = 'block'
+                }
             } catch (error) {
-                alert('Video-Suche fehlgeschlagen');
+                if (error.name !== 'AbortError') {
+                    results.innerHTML = '<div class="error">Suche fehlgeschlagen</div>'
+                    results.style.display = 'block'
+                }
             }
         }
 
@@ -187,51 +205,62 @@
                         type: 'video',
                         content: videoId
                     })
-                });
+                })
 
                 document.getElementById('video-list').insertAdjacentHTML('beforeend', `
                     <div class="video-item" data-video-id="${videoId}">
                         <iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>
                         <button class="delete-video" onclick="deleteVideo('${videoId}')">×</button>
                     </div>
-                `);
+                `)
 
-                document.getElementById('search-results').style.display = 'none';
+                document.getElementById('search-query').value = ''
+                document.getElementById('search-results').style.display = 'none'
+                document.getElementById('search-results').innerHTML = ''
             } catch (error) {
-                alert(`Fehler: ${error.message}`);
+                alert(`Fehler: ${error.message}`)
+            }
+        }
+
+        async function deleteVideo(videoId) {
+            if (!confirm('Video wirklich löschen?')) return
+
+            try {
+                const response = await fetch(`/study_methods/${GOAL_ID}/${videoId}`, {
+                    method: 'DELETE'
+                })
+
+                if (!response.ok) throw new Error('Löschen fehlgeschlagen')
+                document.querySelector(`[data-video-id="${videoId}"]`).remove()
+            } catch (error) {
+                alert(`Fehler: ${error.message}`)
             }
         }
 
         window.addEventListener('DOMContentLoaded', async () => {
             try {
-                const response = await fetch(`/study_methods/${GOAL_ID}`);
-                const methods = await response.json();
+                const response = await fetch(`/study_methods/${GOAL_ID}`)
+                const methods = await response.json()
 
                 methods.forEach(method => {
-                    const container = document.getElementById(`${method.type}-list`);
+                    const container = document.getElementById(`${method.type}-list`)
                     if (method.type === 'video') {
                         container.insertAdjacentHTML('beforeend', `
                             <div class="video-item" data-video-id="${method.content}">
                                 <iframe src="https://www.youtube.com/embed/${method.content}" allowfullscreen></iframe>
                                 <button class="delete-video" onclick="deleteVideo('${method.content}')">×</button>
                             </div>
-                        `);
+                        `)
                     } else {
                         container.insertAdjacentHTML('beforeend', `
                             <div class="method-item">${method.content}</div>
-                        `);
+                        `)
                     }
-                });
+                })
             } catch (error) {
-                alert('Fehler beim Laden der Daten');
+                alert('Fehler beim Laden der Daten')
             }
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.search-box')) {
-                document.getElementById('search-results').style.display = 'none';
-            }
-        });
+        })
     </script>
 </body>
 </html>

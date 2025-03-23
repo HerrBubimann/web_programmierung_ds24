@@ -307,6 +307,7 @@ def delete_study_method(goal_id, content):
 
     return jsonify({'message': 'Methode erfolgreich gelöscht'}), 200
 
+
 @app.route('/youtube-search')
 def youtube_search():
     search_query = request.args.get('q', '')
