@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, flash, jsonify, make_response
+from flask import Flask, render_template, redirect, url_for, request, flash, jsonify, make_response, send_from_directory
 from flask_login import LoginManager, login_user, logout_user
 from datenbank.models import db, User, Token, Topic, LearningGoal, StudyMethod
 from config import Config
@@ -320,6 +320,11 @@ def youtube_search():
     )
     response = youtube_request.execute()
     return jsonify(response['items'])
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'storefront/static'),
+                               'icon.png', mimetype='image/png')
 
 def main():
     with app.app_context():
